@@ -1,0 +1,72 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<head>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        .container1 {
+            
+            height: auto;
+            width: 100%;
+            margin: auto;
+            align-items: center;
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+            .container1 img {
+                width: 150px;
+                height: 150px;
+                padding-top: 10px;
+                
+            }
+
+        #container2 {
+            float: left;
+            margin: auto;
+        }
+
+        #container3 {
+            float: left;
+            margin: auto;
+        }
+
+        #container4 {
+            float:left;
+            margin: auto;
+        }
+
+        #container5 {
+            margin: auto;
+        }
+    </style>
+</head>
+
+
+
+<div class="text-center">
+    <h1 class="display-4">Garage 2.1</h1>
+    <img src="/img/garage.svg" alt="Garage" />
+</div>
+
+<div class="container1 d-flex justify-content-center text-center">
+    <div id="container2">
+        <a class="nav-link text-dark" asp-area="" asp-controller="ParkedVehicles" asp-action="Index"><img src="/img/parked.svg" alt="See all parked vehicles"></a>
+        <p class="lead" style="padding-top: 20px">See all parked vehicles</p>
+    </div>
+
+    <div id="container3">
+        <a class="nav-link text-dark" asp-area="" asp-controller="ParkedVehicles" asp-action="Create"><img src="/img/parking.svg" alt="Park new vehicle"></a>
+        <p class="lead" style="padding-top: 20px">Park new vehicle</p>
+
+    </div>
+
+    <div id="container4">
+        <a class="nav-link text-dark" asp-area="" asp-controller="ParkedVehicles" asp-action="Search"><img src="/img/search.svg" alt="Search for vehicle"></a>
+        <p class="lead" style="padding-top: 20px">Search vehicles</p>
+    </div>
+
+    <div id="container5">
+        <a class="nav-link text-dark" asp-area="" asp-controller="ParkedVehicles" asp-action="Statistics"><img src="/img/statistics.svg" alt="Statistics"></a>
+        <p class="lead" style="padding-top: 20px">Garage statistics</p>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+﻿@model IEnumerable<GarageMVC.ViewModels.SimpleVehicle>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Vehicles in the garage</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LicenceNr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArrivalTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartLocation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ParkedHours)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                <icon vehicle-type="@item.VehicleType"></icon>
+                @Html.DisplayFor(modelItem => item.VehicleType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LicenceNr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArrivalTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartLocation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ParkedHours) hours
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id"><button type="button" class="btn btn-primary">Details</button></a> |
+                <a asp-action="Edit" asp-route-id="@item.Id"><button type="button" class="btn btn-primary rounded">Change</button></a> |
+                <a asp-action="Receipt" asp-route-id="@item.Id"><button type="button" class="btn btn-danger">Unpark</button></a>
+
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<p id="parknew">
+    <a asp-action="Create"><img src="/img/plus.svg" alt="Park new vehicle" style="width:50px;height:50px;"></a>
+</p>

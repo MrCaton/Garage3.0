@@ -1,0 +1,165 @@
+﻿@model GarageMVC.ViewModels.Parking
+
+
+@{
+    ViewData["Title"] = "Parking";
+}
+<head>
+<style>
+    table {
+        counter-reset: rowNumber;
+    }
+
+        table tr:not(:first-child) {
+            counter-increment: rowNumber;
+        }
+
+        table tr td:first-child::before {
+            content: counter(rowNumber);
+            min-width: 1em;
+            margin-right: 0.5em;
+        }
+   /* .green {
+        background: lime;
+    }
+    .red {
+        background: red;
+    }*/
+
+    .green {
+        color: lime;
+    }
+
+    .red {
+        color: red;
+    }
+</style>
+</head>
+
+<h1>List of parking </h1>
+
+
+
+<table >
+
+    <tbody>
+        @*@foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartLocation)
+                </td>
+
+            </tr>
+        }*@
+        
+        @foreach (var item in Model.FreeSlots)
+
+        {
+
+
+
+            if (item >= 0)
+            {
+                if (item == 0)
+                {
+                    <tr  data-status="Car" class="red">
+                        @*<td>
+                            i
+                        </td>*@
+                        <td >
+                            Car
+                        </td>
+
+                    </tr>
+
+                }
+                else if (item == 1)
+                {
+                    <tr data-status="Motorcycle" class="red">
+                        @*<td>
+                            i
+                        </td>*@
+                        <td >
+                            Motorcycle
+                        </td>
+
+                    </tr>
+
+
+
+
+                }
+                else if (item == 2)
+                {
+                    <tr data-status="Bus" class="red">
+                        @*<td>
+                            i
+                        </td>*@
+                        <td  >
+                            Bus
+                        </td>
+
+                    </tr>
+
+                }
+                else if (item == 3)
+                {
+                    <tr data-status="Airplane" class="red">
+                        @*<td>
+                            i
+                        </td>*@
+                        <td>
+                            Airplane
+                        </td>
+
+                    </tr>
+
+                }
+                else
+                {
+                    <tr data-status="Boat" class="red">
+                        @*<td>
+                            @Html.DisplayFor(modelItem => item)
+                        </td>*@
+                        <td >
+                            Boat
+                        </td>
+
+                    </tr>
+
+                }
+
+                @*<tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item)
+                    </td>
+
+                </tr>*@
+
+            }
+            else
+            {
+                <tr data-status="Empty" class="green">
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item)
+                    </td>*@
+                    <td >
+                        Empty
+                        @*@Html.DisplayFor(modelItem => item)*@
+                    </td>
+
+                </tr>
+            }
+
+        }
+        
+
+
+
+
+    </tbody>
+</table>
+

@@ -1,0 +1,60 @@
+﻿@model GarageMVC.ViewModels.SimpleVehicle
+
+
+@{
+    ViewData["Title"] = "Receipt";
+}
+
+<h1>Receipt for parked vehicle</h1>
+<br />
+<h3>This vehicle has now been picked up</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.VehicleType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VehicleType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LicenceNr)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LicenceNr)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.StartLocation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.StartLocation)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ArrivalTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ArrivalTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DepartureTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DepartureTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ParkedHours)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ParkedHours) hour(s).
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Price).
+        </dd>
+    </dl>
+
+    <a asp-action="Index">Back to List</a>
+
+</div>
