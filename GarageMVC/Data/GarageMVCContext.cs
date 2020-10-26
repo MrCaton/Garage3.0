@@ -16,6 +16,7 @@ namespace GarageMVC.Data
         }
 
         public DbSet<ParkedVehicle> ParkedVehicle { get; set; }
+        public DbSet<Member> Member { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -32,7 +33,13 @@ namespace GarageMVC.Data
                     new ParkedVehicle { Id = 9, VehicleType = VehicleType.Boat, LicenceNr = "BOA222", Brand = "Sea Ray", Color = "White", Model = "SLX 400 OB", NrOfWheels = 0, ArrivalTime =           DateTime.Now.AddDays(-8.0), StartLocation = 15},
                     new ParkedVehicle { Id = 10, VehicleType = VehicleType.Bus, LicenceNr = "BUS222", Brand = "Man", Color = "Blue", Model = "SR 240", NrOfWheels = 4, ArrivalTime =                    DateTime.Now.AddDays(-9.0), StartLocation = 18}
                     
+
                 );
+            modelBuilder.Entity<Member>().HasData(
+            new Member { Id = 1, FirstName = "Nelson", LastName = "Mandela", Email = "nelsonmandela@gmail.com", UserName = "Nmandela" }
+            );
         }
+
+        //public DbSet<GarageMVC.Models.Member> Member { get; set; }
     }
 }
