@@ -6,34 +6,30 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GarageMVC.Data;
-using GarageMVC.ViewModels;
-using GarageMVC.Models;
 using GarageMVC.Models.Entities;
+using AutoMapper;
+using GarageMVC.ViewModels;
 
 namespace GarageMVC.Controllers
 {
-    public class MembersController : Controller
+    public class VehiclesController : Controller
     {
         private readonly GarageMVCContext _context;
+        private readonly IMapper mapper;
 
-        public MembersController(GarageMVCContext context)
+        public VehiclesController(GarageMVCContext context, IMapper mapper)
         {
             _context = context;
+            this.mapper = mapper;
         }
 
-        // GET: Members
-        public async Task<IActionResult> Index(string input)
+        // GET: Vehicles
+        public async Task<IActionResult> Index()
         {
-            var member = string.IsNullOrWhiteSpace(input) ?
-                _context.Members :
-                _context.Members.Where(v => v.UserName.StartsWith(input.ToUpper()));
-
-            var vehicles = await _context.ParkedVehicle.ToListAsync();
-            var model = member.Select(o => MemberVehicle(o, vehicles));
-            return View(await _context.Members.ToListAsync());
+            return View(await _context.Vehicles.ToListAsync());
         }
 
-        // GET: Members/Details/5
+        // GET: Vehicles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -41,39 +37,43 @@ namespace GarageMVC.Controllers
                 return NotFound();
             }
 
-            var member = await _context.Members
+            var vehicle = await _context.Vehicles
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (member == null)
+            if (vehicle == null)
             {
                 return NotFound();
             }
 
-            return View(member);
+            return View(vehicle);
         }
 
-        // GET: Members/Create
+        // GET: Vehicles/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Members/Create
+        // POST: Vehicles/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Member member)
+        public async Task<IActionResult> Create(VehicleAddViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(member);
+
+                var vehicle = mapper.Map<Vehicle>(viewModel);
+
+
+                _context.Add(vehicle);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(member);
+            return View(viewModel);
         }
 
-        // GET: Members/Edit/5
+        // GET: Vehicles/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,22 +81,22 @@ namespace GarageMVC.Controllers
                 return NotFound();
             }
 
-            var member = await _context.Members.FindAsync(id);
-            if (member == null)
+            var vehicle = await _context.Vehicles.FindAsync(id);
+            if (vehicle == null)
             {
                 return NotFound();
             }
-            return View(member);
+            return View(vehicle);
         }
 
-        // POST: Members/Edit/5
+        // POST: Vehicles/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Email")] Member member)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,LicenceNr,Color,Brand,Model,NrOfWheels,ArrivalTime")] Vehicle vehicle)
         {
-            if (id != member.Id)
+            if (id != vehicle.Id)
             {
                 return NotFound();
             }
@@ -105,12 +105,12 @@ namespace GarageMVC.Controllers
             {
                 try
                 {
-                    _context.Update(member);
+                    _context.Update(vehicle);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MemberExists(member.Id))
+                    if (!VehicleExists(vehicle.Id))
                     {
                         return NotFound();
                     }
@@ -121,10 +121,10 @@ namespace GarageMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(member);
+            return View(vehicle);
         }
 
-        // GET: Members/Delete/5
+        // GET: Vehicles/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -132,43 +132,30 @@ namespace GarageMVC.Controllers
                 return NotFound();
             }
 
-            var member = await _context.Members
+            var vehicle = await _context.Vehicles
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (member == null)
+            if (vehicle == null)
             {
                 return NotFound();
             }
 
-            return View(member);
+            return View(vehicle);
         }
 
-        // POST: Members/Delete/5
+        // POST: Vehicles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var member = await _context.Members.FindAsync(id);
-            _context.Members.Remove(member);
+            var vehicle = await _context.Vehicles.FindAsync(id);
+            _context.Vehicles.Remove(vehicle);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MemberExists(int id)
+        private bool VehicleExists(int id)
         {
-            return _context.Members.Any(e => e.Id == id);
+            return _context.Vehicles.Any(e => e.Id == id);
         }
-
-        static public VehicleMember MemberVehicle(Member member, IEnumerable<ParkedVehicle> vehicles)
-        {
-            return new VehicleMember
-            {
-                Id = member.Id,
-                FirstName = member.FirstName,
-                LastName = member.LastName,
-                UserName = member.UserName,
-                VehicleCount = vehicles.Where(v => v.Id == member.Id).Count()
-            };
-        }
-
     }
 }

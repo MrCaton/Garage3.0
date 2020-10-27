@@ -1,16 +1,14 @@
-﻿using System;
+﻿using GarageMVC.Models.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GarageMVC.Models.Entities
+namespace GarageMVC.ViewModels
 {
-    public class Vehicle
+    public class VehicleAddViewModel
     {
-        public int Id { get; set; }
-                
-
         [Required]
         [Display(Name = "Licence number")]
         [StringLength(6, MinimumLength = 6, ErrorMessage = "Value must be six characters.")]
@@ -37,14 +35,5 @@ namespace GarageMVC.Models.Entities
         [Required]
         [Display(Name = "Type of vehicle")]
         public VehicleType2 VehicleType2 { get; set; }
-
-        public Member Member { get; set; }
-
-        public ICollection<VehicleSpot> VehicleSpots { get; set; }
-
-
-
-
-
     }
 }

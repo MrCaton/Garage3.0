@@ -77,6 +77,6 @@ namespace GarageMVC.Data
 
         }
 
-        public DbSet<GarageMVC.Models.Entities.Member> Member { get; set; }
+        //public DbSet<GarageMVC.Models.Entities.Member> Member { get; set; }
     }
 }
