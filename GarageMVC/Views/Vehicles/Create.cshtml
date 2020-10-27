@@ -1,4 +1,5 @@
 ﻿@model GarageMVC.ViewModels.VehicleAddViewModel
+@inject GarageMVC.Services.IVehicleTypeSelectService service
 
 @{
     ViewData["Title"] = "Create";
@@ -44,7 +45,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="VehicleType2" class="control-label"></label>
-                <input asp-for="VehicleType2" class="form-control" />
+                <select asp-for="VehicleType2" asp-items="@await service.SelectTypes()" class="form-control"></select>
                 <span asp-validation-for="VehicleType2" class="text-danger"></span>
             </div>
             <div class="form-group">

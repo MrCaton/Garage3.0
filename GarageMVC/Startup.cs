@@ -13,6 +13,7 @@ using GarageMVC.Data;
 
 using GarageMVC.ViewModels;
 using AutoMapper;
+using GarageMVC.Services;
 
 namespace GarageMVC
 {
@@ -31,6 +32,7 @@ namespace GarageMVC
             services.AddControllersWithViews();
             services.Configure<PriceSettings>(Configuration.GetSection("PriceOptions"));
             services.Configure<GarageSettings>(Configuration.GetSection("GarageOptions"));
+            services.AddScoped<IVehicleTypeSelectService, VehicleTypeSelectService>();
 
             services.AddAutoMapper(typeof(Startup));
 

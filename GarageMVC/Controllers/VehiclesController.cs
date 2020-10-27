@@ -50,6 +50,7 @@ namespace GarageMVC.Controllers
         // GET: Vehicles/Create
         public IActionResult Create()
         {
+            // SelectListItem binda till VehicleType2.Name
             return View();
         }
 
