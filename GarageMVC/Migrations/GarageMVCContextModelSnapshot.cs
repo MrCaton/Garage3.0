@@ -19,7 +19,7 @@ namespace GarageMVC.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("GarageMVC.Models.Member", b =>
+            modelBuilder.Entity("GarageMVC.Models.Entities.Member", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -40,7 +40,7 @@ namespace GarageMVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Member");
+                    b.ToTable("Members");
 
                     b.HasData(
                         new
@@ -53,7 +53,29 @@ namespace GarageMVC.Migrations
                         });
                 });
 
-            modelBuilder.Entity("GarageMVC.Models.ParkedVehicle", b =>
+            modelBuilder.Entity("GarageMVC.Models.Entities.Spot", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Spots");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1
+                        },
+                        new
+                        {
+                            Id = 2
+                        });
+                });
+
+            modelBuilder.Entity("GarageMVC.Models.Entities.Vehicle", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -85,6 +107,80 @@ namespace GarageMVC.Migrations
                     b.Property<int>("NrOfWheels")
                         .HasColumnType("int");
 
+                    b.Property<int>("VehicleTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MemberId");
+
+                    b.HasIndex("VehicleTypeId");
+
+                    b.ToTable("Vehicles");
+                });
+
+            modelBuilder.Entity("GarageMVC.Models.Entities.VehicleSpot", b =>
+                {
+                    b.Property<int>("VehicleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SpotId")
+                        .HasColumnType("int");
+
+                    b.HasKey("VehicleId", "SpotId");
+
+                    b.HasIndex("SpotId");
+
+                    b.ToTable("VehicleSpots");
+                });
+
+            modelBuilder.Entity("GarageMVC.Models.Entities.VehicleType2", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Size")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("VehicleType2s");
+                });
+
+            modelBuilder.Entity("GarageMVC.Models.ParkedVehicle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("ArrivalTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Brand")
+                        .HasColumnType("nvarchar(15)")
+                        .HasMaxLength(15);
+
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LicenceNr")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(6)")
+                        .HasMaxLength(6);
+
+                    b.Property<string>("Model")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<int>("NrOfWheels")
+                        .HasColumnType("int");
+
                     b.Property<int>("StartLocation")
                         .HasColumnType("int");
 
@@ -93,138 +189,35 @@ namespace GarageMVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MemberId");
-
                     b.ToTable("ParkedVehicle");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ArrivalTime = new DateTime(2020, 10, 25, 20, 32, 12, 797, DateTimeKind.Local).AddTicks(8478),
-                            Brand = "Volkswagen",
-                            Color = "Grey",
-                            LicenceNr = "BIL111",
-                            Model = "Golf",
-                            NrOfWheels = 4,
-                            StartLocation = 0,
-                            VehicleType = 0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ArrivalTime = new DateTime(2020, 10, 25, 20, 32, 12, 800, DateTimeKind.Local).AddTicks(4736),
-                            Brand = "Ducati",
-                            Color = "Red",
-                            LicenceNr = "MOT111",
-                            Model = "Retro",
-                            NrOfWheels = 2,
-                            StartLocation = 1,
-                            VehicleType = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ArrivalTime = new DateTime(2020, 10, 24, 20, 32, 12, 800, DateTimeKind.Local).AddTicks(4780),
-                            Brand = "Boeing",
-                            Color = "White",
-                            LicenceNr = "AIR111",
-                            Model = "777",
-                            NrOfWheels = 12,
-                            StartLocation = 2,
-                            VehicleType = 3
-                        },
-                        new
-                        {
-                            Id = 4,
-                            ArrivalTime = new DateTime(2020, 10, 23, 20, 32, 12, 800, DateTimeKind.Local).AddTicks(4786),
-                            Brand = "Bertram",
-                            Color = "White",
-                            LicenceNr = "BOA111",
-                            Model = "31 Flybridge Cruiser",
-                            NrOfWheels = 0,
-                            StartLocation = 5,
-                            VehicleType = 4
-                        },
-                        new
-                        {
-                            Id = 5,
-                            ArrivalTime = new DateTime(2020, 10, 22, 20, 32, 12, 800, DateTimeKind.Local).AddTicks(4791),
-                            Brand = "Mercedes Benz",
-                            Color = "Red",
-                            LicenceNr = "BUS111",
-                            Model = "Citario",
-                            NrOfWheels = 4,
-                            StartLocation = 8,
-                            VehicleType = 2
-                        },
-                        new
-                        {
-                            Id = 6,
-                            ArrivalTime = new DateTime(2020, 10, 21, 20, 32, 12, 800, DateTimeKind.Local).AddTicks(4795),
-                            Brand = "Mercedes Benz",
-                            Color = "Black",
-                            LicenceNr = "BIL222",
-                            Model = "C-Class",
-                            NrOfWheels = 4,
-                            StartLocation = 10,
-                            VehicleType = 0
-                        },
-                        new
-                        {
-                            Id = 7,
-                            ArrivalTime = new DateTime(2020, 10, 20, 20, 32, 12, 800, DateTimeKind.Local).AddTicks(4798),
-                            Brand = "BMW",
-                            Color = "Green",
-                            LicenceNr = "MOT222",
-                            Model = "S 1000 RR",
-                            NrOfWheels = 2,
-                            StartLocation = 11,
-                            VehicleType = 1
-                        },
-                        new
-                        {
-                            Id = 8,
-                            ArrivalTime = new DateTime(2020, 10, 19, 20, 32, 12, 800, DateTimeKind.Local).AddTicks(4802),
-                            Brand = "SAAB",
-                            Color = "Grey",
-                            LicenceNr = "AIR222",
-                            Model = "Gripen",
-                            NrOfWheels = 3,
-                            StartLocation = 12,
-                            VehicleType = 3
-                        },
-                        new
-                        {
-                            Id = 9,
-                            ArrivalTime = new DateTime(2020, 10, 18, 20, 32, 12, 800, DateTimeKind.Local).AddTicks(4805),
-                            Brand = "Sea Ray",
-                            Color = "White",
-                            LicenceNr = "BOA222",
-                            Model = "SLX 400 OB",
-                            NrOfWheels = 0,
-                            StartLocation = 15,
-                            VehicleType = 4
-                        },
-                        new
-                        {
-                            Id = 10,
-                            ArrivalTime = new DateTime(2020, 10, 17, 20, 32, 12, 800, DateTimeKind.Local).AddTicks(4808),
-                            Brand = "Man",
-                            Color = "Blue",
-                            LicenceNr = "BUS222",
-                            Model = "SR 240",
-                            NrOfWheels = 4,
-                            StartLocation = 18,
-                            VehicleType = 2
-                        });
                 });
 
-            modelBuilder.Entity("GarageMVC.Models.ParkedVehicle", b =>
+            modelBuilder.Entity("GarageMVC.Models.Entities.Vehicle", b =>
                 {
-                    b.HasOne("GarageMVC.Models.Member", null)
+                    b.HasOne("GarageMVC.Models.Entities.Member", "Member")
                         .WithMany("Vehicles")
                         .HasForeignKey("MemberId");
+
+                    b.HasOne("GarageMVC.Models.Entities.VehicleType2", "VehicleType")
+                        .WithMany("Vehicles")
+                        .HasForeignKey("VehicleTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GarageMVC.Models.Entities.VehicleSpot", b =>
+                {
+                    b.HasOne("GarageMVC.Models.Entities.Spot", "Spot")
+                        .WithMany("VehicleSpots")
+                        .HasForeignKey("SpotId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GarageMVC.Models.Entities.Vehicle", "Vehicle")
+                        .WithMany("VehicleSpots")
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
