@@ -44,7 +44,7 @@ namespace GarageMVC.Data
             //var a = new VehicleType2 { Id = 6, Name = "Motorcycle", Size = 1 };
             //var b = new Member { Id = 3, FirstName = "Billy", LastName = "Buch", Email = "bill@gmail.com", UserName = "BBch" };
 
-            //modelBuilder.Entity<VehicleSpot>().HasKey(vs => new { vs.VehicleId, vs.SpotId });
+            modelBuilder.Entity<VehicleSpot>().HasKey(vs => new { vs.VehicleId, vs.SpotId });
 
             //modelBuilder.Entity<Member>().HasData(
             //new Member { Id = 1, FirstName = "Nelson", LastName = "Mandela", Email = "nelsonmandela@gmail.com", UserName = "Nmandela" },
@@ -77,6 +77,6 @@ namespace GarageMVC.Data
 
         }
 
-        //public DbSet<GarageMVC.Models.Member> Member { get; set; }
+        public DbSet<GarageMVC.Models.Entities.Member> Member { get; set; }
     }
 }
