@@ -10,7 +10,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using GarageMVC.Data;
+
 using GarageMVC.ViewModels;
+using AutoMapper;
+using GarageMVC.Services;
 
 namespace GarageMVC
 {
@@ -29,8 +32,15 @@ namespace GarageMVC
             services.AddControllersWithViews();
             services.Configure<PriceSettings>(Configuration.GetSection("PriceOptions"));
             services.Configure<GarageSettings>(Configuration.GetSection("GarageOptions"));
+            services.AddScoped<ITypeMemberSelectService, VehicleTypeSelectService>();
+            //services.AddScoped<ITypeMemberSelectService, MemberSelectService>();
+
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddDbContext<GarageMVCContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("GarageMVCContext")));
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,7 +67,7 @@ namespace GarageMVC
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=ParkedVehicles}/{action=Index}/{id?}");
+                    pattern: "{controller=Vehicles}/{action=Create}/{id?}");
             });
         }
     }

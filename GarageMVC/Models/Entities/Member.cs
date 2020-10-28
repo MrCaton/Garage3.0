@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GarageMVC.Models
+namespace GarageMVC.Models.Entities
 {
     public class Member
     {
@@ -24,6 +24,6 @@ namespace GarageMVC.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
-        public ICollection<ParkedVehicle> Vehicles { get; set; }
+        public ICollection<Vehicle> Vehicles { get; set; }
     }
 }

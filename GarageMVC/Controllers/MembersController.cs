@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using GarageMVC.Data;
 using GarageMVC.ViewModels;
 using GarageMVC.Models;
+using GarageMVC.Models.Entities;
 
 namespace GarageMVC.Controllers
 {
@@ -24,12 +25,12 @@ namespace GarageMVC.Controllers
         public async Task<IActionResult> Index(string input)
         {
             var member = string.IsNullOrWhiteSpace(input) ?
-                _context.Member :
-                _context.Member.Where(v => v.UserName.StartsWith(input.ToUpper()));
+                _context.Members :
+                _context.Members.Where(v => v.UserName.StartsWith(input.ToUpper()));
 
             var vehicles = await _context.ParkedVehicle.ToListAsync();
             var model = member.Select(o => MemberVehicle(o, vehicles));
-            return View(await _context.Member.ToListAsync());
+            return View(await _context.Members.ToListAsync());
         }
 
         // GET: Members/Details/5
@@ -40,7 +41,7 @@ namespace GarageMVC.Controllers
                 return NotFound();
             }
 
-            var member = await _context.Member
+            var member = await _context.Members
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (member == null)
             {
@@ -103,7 +104,7 @@ namespace GarageMVC.Controllers
                 return NotFound();
             }
 
-            var member = await _context.Member.FindAsync(id);
+            var member = await _context.Members.FindAsync(id);
             if (member == null)
             {
                 return NotFound();
@@ -154,7 +155,7 @@ namespace GarageMVC.Controllers
                 return NotFound();
             }
 
-            var member = await _context.Member
+            var member = await _context.Members
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (member == null)
             {
@@ -169,15 +170,15 @@ namespace GarageMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var member = await _context.Member.FindAsync(id);
-            _context.Member.Remove(member);
+            var member = await _context.Members.FindAsync(id);
+            _context.Members.Remove(member);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MemberExists(int id)
         {
-            return _context.Member.Any(e => e.Id == id);
+            return _context.Members.Any(e => e.Id == id);
         }
 
         static public VehicleMember MemberVehicle(Member member, IEnumerable<ParkedVehicle> vehicles)
