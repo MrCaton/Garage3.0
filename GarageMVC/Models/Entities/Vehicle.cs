@@ -32,6 +32,11 @@ namespace GarageMVC.Models.Entities
         public DateTime ArrivalTime { get; set; }
 
 
+        // Foregin Keys
+        public int VehicleType2Id { get; set; }
+        public int MemberId { get; set; }
+
+
         // Navigation properties
 
         [Required]

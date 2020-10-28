@@ -66,7 +66,7 @@ namespace GarageMVC
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=ParkedVehicles}/{action=Index}/{id?}");
+                    pattern: "{controller=Vehicles}/{action=Create}/{id?}");
             });
         }
     }

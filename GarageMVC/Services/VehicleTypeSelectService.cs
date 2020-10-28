@@ -25,7 +25,7 @@ namespace GarageMVC.Services
             new SelectListItem()
             {
                 Text = n.Name,
-                Value = n.Name
+                Value = n.Id.ToString()
             }).ToListAsync();
         }
 

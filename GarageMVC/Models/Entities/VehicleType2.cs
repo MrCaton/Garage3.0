@@ -13,6 +13,8 @@ namespace GarageMVC.Models.Entities
         public int Size { get; set; }
 
 
+        
+
         // Navigation Props
         public ICollection<Vehicle> Vehicles { get; set; }
 

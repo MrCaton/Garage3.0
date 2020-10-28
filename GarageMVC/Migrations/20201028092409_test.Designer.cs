@@ -4,14 +4,16 @@ using GarageMVC.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GarageMVC.Migrations
 {
     [DbContext(typeof(GarageMVCContext))]
-    partial class GarageMVCContextModelSnapshot : ModelSnapshot
+    [Migration("20201028092409_test")]
+    partial class test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,16 +43,6 @@ namespace GarageMVC.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Members");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 3,
-                            Email = "bill@gmail.com",
-                            FirstName = "Billy",
-                            LastName = "Buch",
-                            UserName = "BBch"
-                        });
                 });
 
             modelBuilder.Entity("GarageMVC.Models.Entities.Spot", b =>
@@ -140,14 +132,6 @@ namespace GarageMVC.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("VehicleType2s");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 6,
-                            Name = "Motorcycle",
-                            Size = 1
-                        });
                 });
 
             modelBuilder.Entity("GarageMVC.Models.ParkedVehicle", b =>

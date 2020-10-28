@@ -32,9 +32,9 @@ namespace GarageMVC.ViewModels
 
         // Navigation properties
 
-        [Required]
+        
         [Display(Name = "Type of vehicle")]
-        public VehicleType2 VehicleType2 { get; set; }
+        // public VehicleType2 VehicleType2 { get; set; }
         public int VehicleType2Id { get; set; }
         
     }
