@@ -45,7 +45,7 @@ namespace GarageMVC.Models.Entities
 
         public Member Member { get; set; }
 
-        public ICollection<VehicleSpot> VehicleSpots { get; set; }
+        public ICollection<Spot> Spots { get; set; }
 
 
 
