@@ -20,6 +20,9 @@ namespace GarageMVC.Models.Entities
         //[Remote(action: "UserNameExists", controller: "Remote", HttpMethod = "POST", ErrorMessage = "The user name exists")]
         [Display(Name = "User Name")]
         public string UserName { get; set; }
+        
+        [Display(Name = "Password")]
+        public string Password { get; set; }
 
         public ICollection<Vehicle> Vehicles { get; set; }
     }

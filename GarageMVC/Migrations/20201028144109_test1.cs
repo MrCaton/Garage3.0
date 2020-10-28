@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GarageMVC.Migrations
 {
-    public partial class test : Migration
+    public partial class test1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,7 +16,8 @@ namespace GarageMVC.Migrations
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
-                    UserName = table.Column<string>(nullable: true)
+                    UserName = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -124,6 +125,16 @@ namespace GarageMVC.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Members",
+                columns: new[] { "Id", "Email", "FirstName", "LastName", "Password", "UserName" },
+                values: new object[] { 3, "bill@gmail.com", "Billy", "Buch", null, "BBch" });
+
+            migrationBuilder.InsertData(
+                table: "VehicleType2s",
+                columns: new[] { "Id", "Name", "Size" },
+                values: new object[] { 6, "Motorcycle", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vehicles_MemberId",
