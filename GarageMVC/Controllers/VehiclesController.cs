@@ -11,6 +11,7 @@ using AutoMapper;
 using GarageMVC.ViewModels;
 using GarageMVC.Common;
 using System.Net.WebSockets;
+using Microsoft.Extensions.Options;
 
 namespace GarageMVC.Controllers
 {
@@ -18,6 +19,7 @@ namespace GarageMVC.Controllers
     {
         private readonly GarageMVCContext _context;
         private readonly IMapper mapper;
+        private readonly IOptions<GarageSettings> garageSettings;
 
         public VehiclesController(GarageMVCContext context, IMapper mapper)
         {
@@ -179,8 +181,7 @@ namespace GarageMVC.Controllers
         // for the vehicle type to fit.
         private int? GetFreeSpot(Vehicle vehicle)
         {
-            //ToDo: Get the config value instead!!!
-            const int maxGarageSize = 14;
+            int maxGarageSize = garageSettings.Value.Size;
 
             int width = _context.VehicleType2s
                         .Where(v => v.Id == vehicle.VehicleType2Id)
