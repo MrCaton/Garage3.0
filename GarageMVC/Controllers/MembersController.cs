@@ -47,17 +47,17 @@ namespace GarageMVC.Controllers
             {
                 return NotFound();
             }
-            var model = new Member
-            {
-                FirstName = member.FirstName,
-                LastName = member.LastName,
-                UserName = member.UserName,
-                Email = member.Email,
-                Vehicles = await _context.ParkedVehicle.Where(o => o.Id == member.Id).ToListAsync()
-            };
+            //var model = new Member
+            //{
+            //    FirstName = member.FirstName,
+            //    LastName = member.LastName,
+            //    UserName = member.UserName,
+            //    Email = member.Email,
+            //    Vehicles = await _context.ParkedVehicle.Where(o => o.Id == member.Id).ToListAsync()
+            //};
 
-            return View(model);
-            //return View(member);
+            //return View(model);
+            return View(member);
         }
 
         // GET: Members/Create
@@ -73,9 +73,9 @@ namespace GarageMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create( Member member)
         {
-            bool EmailExists = _context.Member.Any
+            bool EmailExists = _context.Members.Any
                 (v => v.Email == member.Email);
-            bool UserExists = _context.Member.Any
+            bool UserExists = _context.Members.Any
                 (v => v.UserName == member.UserName);
             if (EmailExists)
             {

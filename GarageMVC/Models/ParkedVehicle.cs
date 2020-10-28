@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using static AutoMapper.Internal.ExpressionFactory;
 
 namespace GarageMVC.Models
 {
@@ -39,6 +40,6 @@ namespace GarageMVC.Models
         //public int Id { get; set; }
 
         //Navigation
-        public Member Member { get; set; }
+        //public Member Member { get; set; }
     }
 }

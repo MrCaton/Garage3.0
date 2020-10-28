@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GarageMVC.Migrations
 {
     [DbContext(typeof(GarageMVCContext))]
-    [Migration("20201028092409_test")]
-    partial class test
+    [Migration("20201028144109_test1")]
+    partial class test1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,12 +37,25 @@ namespace GarageMVC.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Members");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 3,
+                            Email = "bill@gmail.com",
+                            FirstName = "Billy",
+                            LastName = "Buch",
+                            UserName = "BBch"
+                        });
                 });
 
             modelBuilder.Entity("GarageMVC.Models.Entities.Spot", b =>
@@ -132,6 +145,14 @@ namespace GarageMVC.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("VehicleType2s");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 6,
+                            Name = "Motorcycle",
+                            Size = 1
+                        });
                 });
 
             modelBuilder.Entity("GarageMVC.Models.ParkedVehicle", b =>
