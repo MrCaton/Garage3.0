@@ -20,7 +20,6 @@ namespace GarageMVC.Data
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Member> Members { get; set; }
         public DbSet<Spot> Spots { get; set; }
-        public DbSet<VehicleSpot> VehicleSpots { get; set; }
         public DbSet<VehicleType2> VehicleType2s { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -43,9 +42,6 @@ namespace GarageMVC.Data
 
             modelBuilder.Entity<VehicleType2>().HasData(new VehicleType2 { Id = 6, Name = "Motorcycle", Size = 1 });
             modelBuilder.Entity<Member>().HasData(new Member { Id = 3, FirstName = "Billy", LastName = "Buch", Email = "bill@gmail.com", UserName = "BBch" });
-
-            modelBuilder.Entity<VehicleSpot>().HasKey(vs => new { vs.VehicleId, vs.SpotId });
-            
 
             //modelBuilder.Entity<Member>().HasData(
             //new Member { Id = 1, FirstName = "Nelson", LastName = "Mandela", Email = "nelsonmandela@gmail.com", UserName = "Nmandela" },
