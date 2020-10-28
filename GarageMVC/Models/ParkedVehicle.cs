@@ -34,5 +34,11 @@ namespace GarageMVC.Models
 
         [DisplayName("Parking Spot")]
         public int StartLocation { get; set; }
+
+        //KEYS
+        //public int Id { get; set; }
+
+        //Navigation
+        public Member Member { get; set; }
     }
 }

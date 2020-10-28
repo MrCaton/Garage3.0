@@ -24,12 +24,16 @@
             <th>
                 @Html.DisplayNameFor(model => model.UserName)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Password)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
             </td>
@@ -40,7 +44,12 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
+                @*<a asp-action="Details" asp-route-id="@item.Id">*@
                 @Html.DisplayFor(modelItem => item.UserName)
+                @*</a>*@
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Password)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
@@ -51,3 +60,6 @@
 }
     </tbody>
 </table>
+<p id="parknew">
+    <a asp-action="Create"><img src="/img/plus.svg" alt="Park new vehicle" style="width:50px;height:50px;"></a>
+</p>

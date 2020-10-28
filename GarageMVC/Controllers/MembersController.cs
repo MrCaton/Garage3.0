@@ -46,8 +46,17 @@ namespace GarageMVC.Controllers
             {
                 return NotFound();
             }
+            var model = new Member
+            {
+                FirstName = member.FirstName,
+                LastName = member.LastName,
+                UserName = member.UserName,
+                Email = member.Email,
+                Vehicles = await _context.ParkedVehicle.Where(o => o.Id == member.Id).ToListAsync()
+            };
 
-            return View(member);
+            return View(model);
+            //return View(member);
         }
 
         // GET: Members/Create
@@ -61,13 +70,27 @@ namespace GarageMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Email")] Member member)
+        public async Task<IActionResult> Create( Member member)
         {
-            if (ModelState.IsValid)
+            bool EmailExists = _context.Member.Any
+                (v => v.Email == member.Email);
+            bool UserExists = _context.Member.Any
+                (v => v.UserName == member.UserName);
+            if (EmailExists)
             {
-                _context.Add(member);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                ModelState.AddModelError("Email", "Email already exists");
+            }
+            else if (UserExists)
+            {
+                ModelState.AddModelError("UserName", "User name already exists");
+            }
+            else { 
+                if (ModelState.IsValid)
+                {
+                    _context.Add(member);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
             return View(member);
         }
@@ -93,7 +116,7 @@ namespace GarageMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Email")] Member member)
+        public async Task<IActionResult> Edit(int id,  Member member)
         {
             if (id != member.Id)
             {
@@ -161,7 +184,7 @@ namespace GarageMVC.Controllers
         {
             return new VehicleMember
             {
-                Id = member.Id,
+                VehicleId = member.Id,
                 FirstName = member.FirstName,
                 LastName = member.LastName,
                 UserName = member.UserName,
