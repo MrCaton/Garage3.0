@@ -61,11 +61,12 @@ namespace GarageMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(VehicleAddViewModel viewModel)
         {
+            
             if (ModelState.IsValid)
             {
 
                 var vehicle = mapper.Map<Vehicle>(viewModel);
-                
+                vehicle.ArrivalTime = DateTime.Now;
 
                 _context.Add(vehicle);
                 await _context.SaveChangesAsync();
