@@ -65,7 +65,7 @@ namespace GarageMVC.Controllers
             {
 
                 var vehicle = mapper.Map<Vehicle>(viewModel);
-                vehicle.MemberId = 3;
+                
 
                 _context.Add(vehicle);
                 await _context.SaveChangesAsync();

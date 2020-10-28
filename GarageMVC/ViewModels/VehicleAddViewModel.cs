@@ -36,6 +36,8 @@ namespace GarageMVC.ViewModels
         [Display(Name = "Type of vehicle")]
         // public VehicleType2 VehicleType2 { get; set; }
         public int VehicleType2Id { get; set; }
+
+        public int MemberId { get; set; }
         
     }
 }

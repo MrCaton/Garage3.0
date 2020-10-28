@@ -4,8 +4,9 @@ using System.Threading.Tasks;
 
 namespace GarageMVC.Services
 {
-    public interface IVehicleTypeSelectService
+    public interface ITypeMemberSelectService
     {
         Task<IEnumerable<SelectListItem>> SelectTypes();
+        Task<IEnumerable<SelectListItem>> SelectMembers();
     }
 }
