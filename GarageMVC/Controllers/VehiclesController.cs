@@ -9,6 +9,8 @@ using GarageMVC.Data;
 using GarageMVC.Models.Entities;
 using AutoMapper;
 using GarageMVC.ViewModels;
+using GarageMVC.Common;
+using System.Net.WebSockets;
 
 namespace GarageMVC.Controllers
 {
@@ -70,6 +72,12 @@ namespace GarageMVC.Controllers
 
                 _context.Add(vehicle);
                 await _context.SaveChangesAsync();
+
+                // Try to park this vehicle
+                var v = _context.Vehicles.Where(v => v.LicenceNr == viewModel.LicenceNr).Single();
+                var result1 = ParkVehicle(v);
+                // We now have a success-flag and a message (in result1)
+
                 return RedirectToAction(nameof(Index));
             }
             return View(viewModel);
@@ -158,6 +166,81 @@ namespace GarageMVC.Controllers
         private bool VehicleExists(int id)
         {
             return _context.Vehicles.Any(e => e.Id == id);
+        }
+
+        // Returns true only if the vehicle is parked in the garage
+        private bool VehicleIsParked(int id)
+        {
+            return _context.Spots.Any(s => s.Vehicle.Id == id);
+        }
+
+        // Returns first index of first free parking slot
+        // that has enough number of free adjoining slots
+        // for the vehicle type to fit.
+        private int? GetFreeSpot(Vehicle vehicle)
+        {
+            //ToDo: Get the config value instead!!!
+            const int maxGarageSize = 14;
+
+            int width = _context.VehicleType2s
+                        .Where(v => v.Id == vehicle.VehicleType2Id)
+                        .Single().Size;
+
+            var parked = _context.Spots
+                         .OrderBy(s => s.SpotNr)
+                         .Select(s => s.SpotNr)
+                         .ToList();
+
+            parked.Add(maxGarageSize); // add garage wall as a "parking spot"
+
+            var testSpot = 0;
+            foreach(var parkedSpot in parked)
+            {
+                if((parkedSpot - testSpot) >= width)
+                {
+                    return testSpot; // found enough free spots in a row
+                }
+                testSpot = parkedSpot + 1;
+            }
+            return null; // no space found
+        }
+
+        private GarageResult ParkVehicle(Vehicle vehicle)
+        {
+            var vType = _context.VehicleType2s
+                        .Where(v => v.Id == vehicle.VehicleType2Id)
+                        .Single();
+
+            var spot = GetFreeSpot(vehicle);
+            if (spot == null)
+            {
+                return new GarageResult(false, $"{vType.Name} cannot be parked! No more room in the garage.");
+            }
+
+            // Park the vehicle
+            for (int i = 0; i < vType.Size; i++)
+            {
+                _context.Spots.Add(new Spot()
+                {
+                    SpotNr = spot.Value + i,
+                    VehicleId = vehicle.Id
+                });
+            }
+            _context.SaveChanges();
+            return new GarageResult(true, "Vehicle parked successfully!");
+        }
+
+        private GarageResult UnparkVehicle(Vehicle vehicle)
+        {
+            if (VehicleIsParked(vehicle.Id))
+            {
+                var range = _context.Spots.Where(s => s.VehicleId == vehicle.Id);
+                _context.Spots.RemoveRange(range);
+                _context.SaveChanges();
+
+                return new GarageResult(true, $"Vehicle {vehicle.LicenceNr} was unparked successfully!");
+            }
+            return new GarageResult(false, "Cannot find that vehicle in the garage!");
         }
     }
 }
