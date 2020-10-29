@@ -8,10 +8,13 @@ namespace GarageMVC.Models.Entities
     public class Spot
     {
         public int Id { get; set; }
-        //public int Nr { get; set; }
+        public int SpotNr { get; set; }
+
+        // Foreign Key
+        public int? VehicleId { get; set; }
 
         //Navigation Props
-        public ICollection<VehicleSpot> VehicleSpots { get; set; }
+        public Vehicle Vehicle { get; set; }
 
     }
 }
