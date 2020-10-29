@@ -8,6 +8,8 @@ namespace GarageMVC.ViewModels
 {
     public class VehicleIndexViewModel
     {
+        public int Id { get; set; }
+
         [DisplayName("User")]
         public string UserName { get; set; }
 
