@@ -13,7 +13,7 @@ namespace GarageMVC.Data
 
         public MapperProfile()
         {
-            //CreateMap<Vehicle, VehicleAddViewModel>();
+            CreateMap<Vehicle, ReceiptViewModel>();
             CreateMap<Vehicle, VehicleAddViewModel>().ReverseMap();
         }
         

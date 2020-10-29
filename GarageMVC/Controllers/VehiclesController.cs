@@ -9,17 +9,20 @@ using GarageMVC.Data;
 using GarageMVC.Models.Entities;
 using AutoMapper;
 using GarageMVC.ViewModels;
+using Microsoft.Extensions.Options;
 
 namespace GarageMVC.Controllers
 {
     public class VehiclesController : Controller
     {
         private readonly GarageMVCContext _context;
+        private readonly IOptions<PriceSettings> priceSettings;
         private readonly IMapper mapper;
 
-        public VehiclesController(GarageMVCContext context, IMapper mapper)
+        public VehiclesController(GarageMVCContext context, IMapper mapper, IOptions<PriceSettings> priceSettings)
         {
             _context = context;
+            this.priceSettings = priceSettings;
             this.mapper = mapper;
         }
 
@@ -158,6 +161,45 @@ namespace GarageMVC.Controllers
         private bool VehicleExists(int id)
         {
             return _context.Vehicles.Any(e => e.Id == id);
+        }
+
+
+        public async Task<IActionResult> Receipt(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var vehicle = await _context.Vehicles.FirstOrDefaultAsync(v => v.Id == id);
+
+            if (vehicle == null)
+            {
+                return NotFound();
+            }
+
+            var member = await _context.Members.FirstOrDefaultAsync(m => m.Id == vehicle.MemberId);
+
+            if (member == null)
+            {
+                return NotFound();
+            }
+
+            var type = await _context.VehicleType2s.FirstOrDefaultAsync(t => t.Id == vehicle.VehicleType2Id);
+
+
+            var receipt = mapper.Map<ReceiptViewModel>(vehicle);
+
+            receipt.UserName = member.UserName;
+            receipt.DepartureTime = DateTime.Now;
+            receipt.ParkedHours = Convert.ToInt32((DateTime.Now - vehicle.ArrivalTime).TotalHours);
+            receipt.Price = priceSettings.Value.Price * Convert.ToInt32((DateTime.Now - vehicle.ArrivalTime).TotalHours) * type.Size;
+
+            
+            _context.Vehicles.Remove(vehicle);
+            await _context.SaveChangesAsync();
+
+            return View(receipt);
         }
     }
 }
