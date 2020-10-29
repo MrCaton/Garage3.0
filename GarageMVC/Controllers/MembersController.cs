@@ -9,16 +9,20 @@ using GarageMVC.Data;
 using GarageMVC.ViewModels;
 using GarageMVC.Models;
 using GarageMVC.Models.Entities;
+using AutoMapper;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Text;
 
 namespace GarageMVC.Controllers
 {
     public class MembersController : Controller
     {
         private readonly GarageMVCContext _context;
-
-        public MembersController(GarageMVCContext context)
+        private readonly IMapper mapper;
+        public MembersController(GarageMVCContext context, IMapper mapper)
         {
             _context = context;
+            this.mapper = mapper;
         }
 
         // GET: Members
@@ -49,6 +53,7 @@ namespace GarageMVC.Controllers
             }
             var model = new Member
             {
+                Id = member.Id,
                 FirstName = member.FirstName,
                 LastName = member.LastName,
                 UserName = member.UserName,
@@ -59,6 +64,7 @@ namespace GarageMVC.Controllers
 
             return View(model);
             //return View(member);
+
         }
 
         // GET: Members/Create
@@ -192,6 +198,39 @@ namespace GarageMVC.Controllers
                 UserName = member.UserName,
                 VehicleCount = vehicles.Where(v => v.Id == member.Id).Count()
             };
+        }
+        public async Task<IActionResult> Profile(int?id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var vehicle = await _context.Vehicles.FirstOrDefaultAsync(v => v.Id == id);
+            if (vehicle == null)
+            {
+                return NotFound();
+            }
+            var member = await _context.Members.FirstOrDefaultAsync(m => m.Id == vehicle.MemberId);
+            if (member == null)
+            {
+                return NotFound();
+            }
+            var profile = mapper.Map<ProfileViewModel>(member);
+            //var profile = mapper.Map<ProfileViewModel>(vehicle);
+            var vehicleslist = _context.Vehicles.Where(s => s.MemberId ==profile.Id).Select(s => s.LicenceNr).ToList();
+            //var sb = new StringBuilder();
+            //sb.Append();
+            //if (Id.Count > 1)
+            //{
+            //    foreach (var item in Id)
+            //    {
+            //        sb.Append($", {item}");
+            //    }
+            //}
+            //receipt.SpotNr = sb.ToString();
+
+
+            return View(profile);
         }
 
     }

@@ -2,7 +2,7 @@
 
 namespace GarageMVC.Migrations
 {
-    public partial class test3 : Migration
+    public partial class test4 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

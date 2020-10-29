@@ -38,9 +38,6 @@ namespace GarageMVC.Migrations
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VehicleType2Id")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("Members");
@@ -52,8 +49,7 @@ namespace GarageMVC.Migrations
                             Email = "bill@gmail.com",
                             FirstName = "Billy",
                             LastName = "Buch",
-                            UserName = "BBch",
-                            VehicleType2Id = 0
+                            UserName = "BBch"
                         });
                 });
 

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GarageMVC.Migrations
 {
     [DbContext(typeof(GarageMVCContext))]
-    [Migration("20201029102524_test4")]
-    partial class test4
+    [Migration("20201029115514_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -40,9 +40,6 @@ namespace GarageMVC.Migrations
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VehicleType2Id")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("Members");
@@ -54,8 +51,7 @@ namespace GarageMVC.Migrations
                             Email = "bill@gmail.com",
                             FirstName = "Billy",
                             LastName = "Buch",
-                            UserName = "BBch",
-                            VehicleType2Id = 0
+                            UserName = "BBch"
                         });
                 });
 

@@ -26,6 +26,6 @@ namespace GarageMVC.Models.Entities
 
         public ICollection<Vehicle> Vehicles { get; set; }
         // Foregin Keys
-        public int VehicleType2Id { get; set; }
+        //public int VehicleType2Id { get; set; }
     }
 }

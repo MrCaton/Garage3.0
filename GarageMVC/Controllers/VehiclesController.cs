@@ -44,24 +44,11 @@ namespace GarageMVC.Controllers
                 LicenceNr = v.LicenceNr,
                 ParkedHours = Convert.ToInt32((DateTime.Now - v.ArrivalTime).TotalHours)
             });
-
             
+
 
             return View(indexList.ToList());
 
-            //var list = await _context.ParkedVehicle.ToListAsync();
-            //var simpleList = list.Select(v =>
-            //    new SimpleVehicle
-            //    {
-            //        Id = v.Id,
-            //        VehicleType = v.VehicleType.ToString(),
-            //        LicenceNr = v.LicenceNr,
-            //        ArrivalTime = v.ArrivalTime,
-            //        StartLocation = GetParkingSpots(v),
-            //        ParkedHours = Convert.ToInt32((DateTime.Now - v.ArrivalTime).TotalHours)
-            //    });
-
-            //return View(simpleList.ToList());
         }
 
         // GET: Vehicles/Details/5
@@ -78,7 +65,7 @@ namespace GarageMVC.Controllers
             {
                 return NotFound();
             }
-
+            
             return View(vehicle);
         }
 

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GarageMVC.Migrations
 {
     [DbContext(typeof(GarageMVCContext))]
-    [Migration("20201028152810_test3")]
-    partial class test3
+    [Migration("20201029124601_test4")]
+    partial class test4
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,9 +35,6 @@ namespace GarageMVC.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
@@ -65,7 +62,15 @@ namespace GarageMVC.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("SpotNr")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("VehicleId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("VehicleId");
 
                     b.ToTable("Spots");
                 });
@@ -112,21 +117,6 @@ namespace GarageMVC.Migrations
                     b.HasIndex("VehicleType2Id");
 
                     b.ToTable("Vehicles");
-                });
-
-            modelBuilder.Entity("GarageMVC.Models.Entities.VehicleSpot", b =>
-                {
-                    b.Property<int>("VehicleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SpotId")
-                        .HasColumnType("int");
-
-                    b.HasKey("VehicleId", "SpotId");
-
-                    b.HasIndex("SpotId");
-
-                    b.ToTable("VehicleSpots");
                 });
 
             modelBuilder.Entity("GarageMVC.Models.Entities.VehicleType2", b =>
@@ -195,6 +185,13 @@ namespace GarageMVC.Migrations
                     b.ToTable("ParkedVehicle");
                 });
 
+            modelBuilder.Entity("GarageMVC.Models.Entities.Spot", b =>
+                {
+                    b.HasOne("GarageMVC.Models.Entities.Vehicle", "Vehicle")
+                        .WithMany("Spots")
+                        .HasForeignKey("VehicleId");
+                });
+
             modelBuilder.Entity("GarageMVC.Models.Entities.Vehicle", b =>
                 {
                     b.HasOne("GarageMVC.Models.Entities.Member", "Member")
@@ -206,21 +203,6 @@ namespace GarageMVC.Migrations
                     b.HasOne("GarageMVC.Models.Entities.VehicleType2", "VehicleType2")
                         .WithMany("Vehicles")
                         .HasForeignKey("VehicleType2Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("GarageMVC.Models.Entities.VehicleSpot", b =>
-                {
-                    b.HasOne("GarageMVC.Models.Entities.Spot", "Spot")
-                        .WithMany("VehicleSpots")
-                        .HasForeignKey("SpotId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GarageMVC.Models.Entities.Vehicle", "Vehicle")
-                        .WithMany("VehicleSpots")
-                        .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
