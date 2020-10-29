@@ -23,7 +23,6 @@ namespace GarageMVC.Controllers
         private readonly IOptions<PriceSettings> priceSettings;
         private readonly IOptions<GarageSettings> garageSettings;
         private readonly IMapper mapper;
-        private readonly IOptions<GarageSettings> garageSettings;
 
         public VehiclesController(GarageMVCContext context, IMapper mapper, IOptions<PriceSettings> priceSettings, IOptions<GarageSettings> garageSettings)
         {
