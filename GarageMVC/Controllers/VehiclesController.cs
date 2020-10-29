@@ -38,6 +38,7 @@ namespace GarageMVC.Controllers
             var indexList = list.Select(v => 
             new VehicleIndexViewModel 
             { 
+                Id = v.Id,
                 UserName = _context.Members.FirstOrDefaultAsync(m => m.Id == v.MemberId).Result.UserName,
                 VehicleType = _context.VehicleType2s.FirstOrDefaultAsync(t => t.Id == v.VehicleType2Id).Result.Name,
                 LicenceNr = v.LicenceNr,
