@@ -15,6 +15,7 @@ namespace GarageMVC.Data
         {
             CreateMap<Vehicle, ReceiptViewModel>();
             CreateMap<Vehicle, VehicleAddViewModel>().ReverseMap();
+            CreateMap<Vehicle, VehicleIndexViewModel>();
         }
         
     }

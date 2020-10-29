@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GarageMVC.Migrations
 {
-    public partial class test1 : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,8 +16,7 @@ namespace GarageMVC.Migrations
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
-                    UserName = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true)
+                    UserName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -42,18 +41,6 @@ namespace GarageMVC.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ParkedVehicle", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Spots",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Spots", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -103,38 +90,39 @@ namespace GarageMVC.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "VehicleSpots",
+                name: "Spots",
                 columns: table => new
                 {
-                    VehicleId = table.Column<int>(nullable: false),
-                    SpotId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SpotNr = table.Column<int>(nullable: false),
+                    VehicleId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_VehicleSpots", x => new { x.VehicleId, x.SpotId });
+                    table.PrimaryKey("PK_Spots", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_VehicleSpots_Spots_SpotId",
-                        column: x => x.SpotId,
-                        principalTable: "Spots",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_VehicleSpots_Vehicles_VehicleId",
+                        name: "FK_Spots_Vehicles_VehicleId",
                         column: x => x.VehicleId,
                         principalTable: "Vehicles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
                 table: "Members",
-                columns: new[] { "Id", "Email", "FirstName", "LastName", "Password", "UserName" },
-                values: new object[] { 3, "bill@gmail.com", "Billy", "Buch", null, "BBch" });
+                columns: new[] { "Id", "Email", "FirstName", "LastName", "UserName" },
+                values: new object[] { 3, "bill@gmail.com", "Billy", "Buch", "BBch" });
 
             migrationBuilder.InsertData(
                 table: "VehicleType2s",
                 columns: new[] { "Id", "Name", "Size" },
                 values: new object[] { 6, "Motorcycle", 1 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Spots_VehicleId",
+                table: "Spots",
+                column: "VehicleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vehicles_MemberId",
@@ -145,20 +133,12 @@ namespace GarageMVC.Migrations
                 name: "IX_Vehicles_VehicleType2Id",
                 table: "Vehicles",
                 column: "VehicleType2Id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_VehicleSpots_SpotId",
-                table: "VehicleSpots",
-                column: "SpotId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "ParkedVehicle");
-
-            migrationBuilder.DropTable(
-                name: "VehicleSpots");
 
             migrationBuilder.DropTable(
                 name: "Spots");
