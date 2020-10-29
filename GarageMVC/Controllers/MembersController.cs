@@ -47,17 +47,18 @@ namespace GarageMVC.Controllers
             {
                 return NotFound();
             }
-            //var model = new Member
-            //{
-            //    FirstName = member.FirstName,
-            //    LastName = member.LastName,
-            //    UserName = member.UserName,
-            //    Email = member.Email,
-            //    Vehicles = await _context.ParkedVehicle.Where(o => o.Id == member.Id).ToListAsync()
-            //};
+            var model = new Member
+            {
+                FirstName = member.FirstName,
+                LastName = member.LastName,
+                UserName = member.UserName,
+                Email = member.Email,
+                Vehicles = member.Vehicles
+                //Vehicles = await _context.ParkedVehicle.Where(o => o.Id == member.Id).ToListAsync()
+            };
 
-            //return View(model);
-            return View(member);
+            return View(model);
+            //return View(member);
         }
 
         // GET: Members/Create
