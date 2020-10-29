@@ -12,8 +12,8 @@ using GarageMVC.ViewModels;
 using Microsoft.Extensions.Options;
 using GarageMVC.Common;
 using System.Net.WebSockets;
+using System.Text;
 using Microsoft.Extensions.Options;
-
 
 namespace GarageMVC.Controllers
 {
@@ -46,23 +46,7 @@ namespace GarageMVC.Controllers
                 ParkedHours = Convert.ToInt32((DateTime.Now - v.ArrivalTime).TotalHours)
             });
 
-            
-
             return View(indexList.ToList());
-
-            //var list = await _context.ParkedVehicle.ToListAsync();
-            //var simpleList = list.Select(v =>
-            //    new SimpleVehicle
-            //    {
-            //        Id = v.Id,
-            //        VehicleType = v.VehicleType.ToString(),
-            //        LicenceNr = v.LicenceNr,
-            //        ArrivalTime = v.ArrivalTime,
-            //        StartLocation = GetParkingSpots(v),
-            //        ParkedHours = Convert.ToInt32((DateTime.Now - v.ArrivalTime).TotalHours)
-            //    });
-
-            //return View(simpleList.ToList());
         }
 
         // GET: Vehicles/Details/5
@@ -258,14 +242,26 @@ namespace GarageMVC.Controllers
 
             var type = await _context.VehicleType2s.FirstOrDefaultAsync(t => t.Id == vehicle.VehicleType2Id);
 
-
             var receipt = mapper.Map<ReceiptViewModel>(vehicle);
 
             receipt.UserName = member.UserName;
             receipt.DepartureTime = DateTime.Now;
             receipt.ParkedHours = Convert.ToInt32((DateTime.Now - vehicle.ArrivalTime).TotalHours);
             receipt.Price = priceSettings.Value.Price * Convert.ToInt32((DateTime.Now - vehicle.ArrivalTime).TotalHours) * type.Size;
-            // add spotnr(s)
+            
+            // Use Linq and StringBuilder to pass a string with all the parkingspots that the vehicle occupies.
+            var spotlist = _context.Spots.Where(s => s.VehicleId == vehicle.Id).Select(s => s.SpotNr).ToList();
+            var sb = new StringBuilder();
+            sb.Append($"{spotlist[0]}");
+
+            if (spotlist.Count > 1)
+            {
+                foreach (var item in spotlist.Skip(1))
+                {
+                    sb.Append($", {item}");
+                }
+            }
+            receipt.SpotNr =  sb.ToString();
 
             var result = UnparkVehicle(vehicle);
 
