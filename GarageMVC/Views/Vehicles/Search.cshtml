@@ -1,0 +1,64 @@
+﻿@model IEnumerable<GarageMVC.Models.Entities.Vehicle>
+@inject GarageMVC.Services.ITypeMemberSelectService service
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<h1>Search for parked vehicles</h1>
+
+<form asp-action="Filter">
+    <div class="input-group mb-4">
+        <input type="text" class="form-control" name="licenseNrContains" placeholder="Search licence number" />
+        <div class="input-group-append">
+            <label  class="control-label"></label>
+            <select  asp-items="@await service.SelectTypes()" class="form-control"></select>
+            <span class="text-danger"></span>
+        </div>
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleType2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LicenceNr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArrivalTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <icon vehicle-type="@item.VehicleType2">" "</icon>
+                    @Html.DisplayFor(modelItem => item.VehicleType2)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LicenceNr)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArrivalTime)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Receipt" asp-route-id="@item.Id">Unpark</a> |
+                    <a asp-action="Edit" asp-route-id="@item.Id">Change</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>
+    <a asp-action="Create"><img src="/img/plus.svg" alt="Park new vehicle" style="width:50px;height:50px;"></a>
+</p>

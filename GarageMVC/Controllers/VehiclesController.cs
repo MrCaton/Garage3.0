@@ -197,6 +197,40 @@ namespace GarageMVC.Controllers
             model.Spots = spotList.ToArray();
             return View(model);
         }
+        public async Task<IActionResult> Search()
+        {
+            var list = await _context.Vehicles.Include(v => v.VehicleType2).ToListAsync();
+            var simpleList = list.Select(v =>
+                new Vehicle
+                {
+                    Id = v.Id,
+                    //VehicleType = v.VehicleType2.Name.ToString(),
+                    LicenceNr = v.LicenceNr,
+                    ArrivalTime = v.ArrivalTime,
+                });
+            return View(simpleList.ToList());
+        }
+
+        public async Task<IActionResult> Filter(string licenseNrContains)
+        {
+            var filteredVehicles = (string.IsNullOrWhiteSpace(licenseNrContains)) ?
+                _context.Vehicles.Include(v => v.VehicleType2) :
+                _context.Vehicles.Include(v => v.VehicleType2)
+                                 .Where(v => v.LicenceNr.Contains(licenseNrContains));
+
+            var filteredSimpleVehicles = filteredVehicles
+                .Select(v => new Vehicle
+                {
+                    Id = v.Id,
+                    VehicleType2Id = v.VehicleType2Id,
+                    LicenceNr = v.LicenceNr,
+                    ArrivalTime = v.ArrivalTime,
+                });
+
+            var model = await filteredSimpleVehicles.ToListAsync();
+
+            return View(nameof(Search), model);
+        }
 
         private bool VehicleExists(int id)
         {
@@ -262,6 +296,30 @@ namespace GarageMVC.Controllers
             }
             _context.SaveChanges();
             return new GarageResult(true, "Vehicle parked successfully!");
+        }
+
+        public async Task<IActionResult> Statistics()
+        {
+            var vehicles = await _context.Vehicles.ToListAsync();
+            var types = await _context.VehicleType2s.ToListAsync();
+
+            var model = new ViewModels.Statistics();
+            var createdVehicleStats = new Dictionary<string, int>();
+
+            foreach(var type in types)
+            {
+                var nrOf = vehicles.Count(v => v.VehicleType2Id == type.Id);
+                createdVehicleStats.Add(type.Name, nrOf);
+            }
+
+            model.NrOfCreatedVehicles = createdVehicleStats;
+
+            model.TotalNrOfWheels = vehicles.Sum(v => v.NrOfWheels);
+
+            var now = DateTime.Now;
+            var totalHours = vehicles.Sum(v => Convert.ToInt32((now - v.ArrivalTime).TotalHours));
+
+            return View(model);
         }
 
         private GarageResult UnparkVehicle(Vehicle vehicle)
