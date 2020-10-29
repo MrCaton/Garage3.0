@@ -334,10 +334,10 @@ namespace GarageMVC.Controllers
 
 
 
-        public async Task<IActionResult> Parking()
-        {
-            var model = new Parking() ;
-            model.FreeSlots = GetGarage();
+        //public async Task<IActionResult> Parking()
+        //{
+        //    var model = new Parking() ;
+        //    model.FreeSlots = GetGarage();
 
             //if (model.FreeSlots == null)
             //{
@@ -356,8 +356,8 @@ namespace GarageMVC.Controllers
                 //}
 
 
-                return View(model);
-        }
+        //        return View(model);
+        //}
         
 
 

@@ -11,6 +11,7 @@ using AutoMapper;
 using GarageMVC.ViewModels;
 using GarageMVC.Common;
 using System.Net.WebSockets;
+using Microsoft.Extensions.Options;
 
 namespace GarageMVC.Controllers
 {
@@ -18,11 +19,13 @@ namespace GarageMVC.Controllers
     {
         private readonly GarageMVCContext _context;
         private readonly IMapper mapper;
+        private readonly IOptions<GarageSettings> garageSettings;
 
-        public VehiclesController(GarageMVCContext context, IMapper mapper)
+        public VehiclesController(GarageMVCContext context, IMapper mapper, IOptions<GarageSettings> garageSettings)
         {
             _context = context;
             this.mapper = mapper;
+            this.garageSettings = garageSettings;
         }
 
         // GET: Vehicles
@@ -163,6 +166,38 @@ namespace GarageMVC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> Parking()
+        {
+            var vTypes = _context.VehicleType2s.ToList();
+            var model = new Parking();
+            var parked = _context.Spots.Include(s => s.Vehicle).OrderBy(s => s.SpotNr);
+            var spotList = new List<SpotDto>();
+            var lastVehicleId = -1;
+            for(int i=0; i<garageSettings.Value.Size; i++)
+            {
+                var spot = parked.Where(x => x.SpotNr == i).SingleOrDefault();
+                if (spot != null) 
+                {
+                    if(spot.VehicleId != lastVehicleId)
+                    {
+                        VehicleType2 vType = vTypes.Where(v => v.Id == spot.Vehicle.VehicleType2Id).Single();
+                        spotList.Add(new SpotDto(i, vType.Size, vType.Name));
+                        lastVehicleId = spot.VehicleId.Value;
+                    }
+                    else
+                    {
+                        spotList.Add(new SpotDto(i, 0, null));
+                    }
+                }
+                else
+                {
+                    spotList.Add(new SpotDto(i, 0, "free"));
+                }
+            }
+            model.Spots = spotList.ToArray();
+            return View(model);
+        }
+
         private bool VehicleExists(int id)
         {
             return _context.Vehicles.Any(e => e.Id == id);
@@ -179,8 +214,7 @@ namespace GarageMVC.Controllers
         // for the vehicle type to fit.
         private int? GetFreeSpot(Vehicle vehicle)
         {
-            //ToDo: Get the config value instead!!!
-            const int maxGarageSize = 14;
+            int maxGarageSize = garageSettings.Value.Size;
 
             int width = _context.VehicleType2s
                         .Where(v => v.Id == vehicle.VehicleType2Id)
@@ -191,7 +225,7 @@ namespace GarageMVC.Controllers
                          .Select(s => s.SpotNr)
                          .ToList();
 
-            parked.Add(maxGarageSize); // add garage wall as a "parking spot"
+            parked.Add(maxGarageSize); // add garage wall as a "taken spot"
 
             var testSpot = 0;
             foreach(var parkedSpot in parked)
@@ -220,7 +254,7 @@ namespace GarageMVC.Controllers
             // Park the vehicle
             for (int i = 0; i < vType.Size; i++)
             {
-                _context.Spots.Add(new Spot()
+                _context.Spots.Add(new Models.Entities.Spot()
                 {
                     SpotNr = spot.Value + i,
                     VehicleId = vehicle.Id
