@@ -20,20 +20,47 @@ namespace GarageMVC.Controllers
     {
         private readonly GarageMVCContext _context;
         private readonly IOptions<PriceSettings> priceSettings;
-        private readonly IMapper mapper;
         private readonly IOptions<GarageSettings> garageSettings;
+        private readonly IMapper mapper;
 
-        public VehiclesController(GarageMVCContext context, IMapper mapper, IOptions<PriceSettings> priceSettings)
+        public VehiclesController(GarageMVCContext context, IMapper mapper, IOptions<PriceSettings> priceSettings, IOptions<GarageSettings> garageSettings)
         {
             _context = context;
             this.priceSettings = priceSettings;
+            this.garageSettings = garageSettings;
             this.mapper = mapper;
         }
 
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Vehicles.ToListAsync());
+            var list = await _context.Vehicles.ToListAsync();
+            var indexList = list.Select(v => 
+            new VehicleIndexViewModel 
+            { 
+                UserName = _context.Members.FirstOrDefaultAsync(m => m.Id == v.MemberId).Result.UserName,
+                VehicleType = _context.VehicleType2s.FirstOrDefaultAsync(t => t.Id == v.VehicleType2Id).Result.Name,
+                LicenceNr = v.LicenceNr,
+                ParkedHours = Convert.ToInt32((DateTime.Now - v.ArrivalTime).TotalHours)
+            });
+
+            
+
+            return View(indexList.ToList());
+
+            //var list = await _context.ParkedVehicle.ToListAsync();
+            //var simpleList = list.Select(v =>
+            //    new SimpleVehicle
+            //    {
+            //        Id = v.Id,
+            //        VehicleType = v.VehicleType.ToString(),
+            //        LicenceNr = v.LicenceNr,
+            //        ArrivalTime = v.ArrivalTime,
+            //        StartLocation = GetParkingSpots(v),
+            //        ParkedHours = Convert.ToInt32((DateTime.Now - v.ArrivalTime).TotalHours)
+            //    });
+
+            //return View(simpleList.ToList());
         }
 
         // GET: Vehicles/Details/5
@@ -204,12 +231,22 @@ namespace GarageMVC.Controllers
             receipt.DepartureTime = DateTime.Now;
             receipt.ParkedHours = Convert.ToInt32((DateTime.Now - vehicle.ArrivalTime).TotalHours);
             receipt.Price = priceSettings.Value.Price * Convert.ToInt32((DateTime.Now - vehicle.ArrivalTime).TotalHours) * type.Size;
+            // add spotnr(s)
 
-            
-            _context.Vehicles.Remove(vehicle);
-            await _context.SaveChangesAsync();
+            var result = UnparkVehicle(vehicle);
 
-            return View(receipt);
+            if (result.Success)
+            {
+                return View(receipt);
+            }
+
+
+            //_context.Vehicles.Remove(vehicle);
+            //await _context.SaveChangesAsync();
+
+            Console.WriteLine($"{result.Message}");
+
+            return NotFound();
         }
 
         // Returns true only if the vehicle is parked in the garage
@@ -284,6 +321,12 @@ namespace GarageMVC.Controllers
                 return new GarageResult(true, $"Vehicle {vehicle.LicenceNr} was unparked successfully!");
             }
             return new GarageResult(false, "Cannot find that vehicle in the garage!");
+        }
+
+        public IActionResult LPCreated()
+        {
+            // This checks if they want to park the vehicle after it has been created
+            return View();
         }
     }
 }
