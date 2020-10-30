@@ -315,10 +315,7 @@ namespace GarageMVC.Controllers
             }
 
 
-            //_context.Vehicles.Remove(vehicle);
-            //await _context.SaveChangesAsync();
-
-            Console.WriteLine($"{result.Message}");
+            //Console.WriteLine($"{result.Message}");
 
             return NotFound();
         }
