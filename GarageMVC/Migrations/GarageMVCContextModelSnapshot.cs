@@ -45,11 +45,35 @@ namespace GarageMVC.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 3,
+                            Id = 1,
                             Email = "bill@gmail.com",
                             FirstName = "Billy",
                             LastName = "Buch",
                             UserName = "BBch"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "ivan@gmail.com",
+                            FirstName = "Ivan",
+                            LastName = "Araque",
+                            UserName = "MrCaton"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "david@gmail.com",
+                            FirstName = "David",
+                            LastName = "Nokto",
+                            UserName = "D.Nokto"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Email = "mats@gmail.com",
+                            FirstName = "Mats",
+                            LastName = "Nilsson",
+                            UserName = "Matslearning"
                         });
                 });
 
@@ -115,6 +139,56 @@ namespace GarageMVC.Migrations
                     b.HasIndex("VehicleType2Id");
 
                     b.ToTable("Vehicles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ArrivalTime = new DateTime(2020, 10, 23, 10, 41, 45, 317, DateTimeKind.Local).AddTicks(9450),
+                            Brand = "Opel",
+                            Color = "Green",
+                            LicenceNr = "CARBBC",
+                            MemberId = 1,
+                            Model = "Corsa",
+                            NrOfWheels = 4,
+                            VehicleType2Id = 2
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ArrivalTime = new DateTime(2020, 10, 25, 10, 41, 45, 320, DateTimeKind.Local).AddTicks(5163),
+                            Brand = "Volvo",
+                            Color = "Black",
+                            LicenceNr = "NAVI94",
+                            MemberId = 2,
+                            Model = "XC90",
+                            NrOfWheels = 4,
+                            VehicleType2Id = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ArrivalTime = new DateTime(2020, 10, 28, 10, 41, 45, 320, DateTimeKind.Local).AddTicks(5211),
+                            Brand = "Yamaha",
+                            Color = "Black",
+                            LicenceNr = "SKTHMH",
+                            MemberId = 3,
+                            Model = "Super",
+                            NrOfWheels = 2,
+                            VehicleType2Id = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ArrivalTime = new DateTime(2020, 10, 29, 10, 41, 45, 320, DateTimeKind.Local).AddTicks(5217),
+                            Brand = "Mercedes",
+                            Color = "Blue",
+                            LicenceNr = "BUSBUS",
+                            MemberId = 4,
+                            Model = "Ultra",
+                            NrOfWheels = 10,
+                            VehicleType2Id = 3
+                        });
                 });
 
             modelBuilder.Entity("GarageMVC.Models.Entities.VehicleType2", b =>
@@ -137,9 +211,27 @@ namespace GarageMVC.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 6,
+                            Id = 1,
                             Name = "Motorcycle",
                             Size = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Car",
+                            Size = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Bus",
+                            Size = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Airplane",
+                            Size = 3
                         });
                 });
 
