@@ -1,0 +1,28 @@
+﻿@model GarageMVC.ViewModels.Parking
+
+@{
+    ViewData["Title"] = "Parking";
+}
+
+<div class="garage-graphics">
+    <h1>Current Garage Status</h1>
+    <h4>Listed by parking spot</h4>
+    <hr />
+    <table>
+        @foreach (var s in Model.Spots)
+        {
+            <tr>
+                <td>@s.spotNr</td>
+                @if (s.infotext == "free")
+                {
+                    <td class="spot-unused">unused</td>
+                }
+                else
+                @if (s.rowspan != 0)
+                {
+                    <td class="spot-parked" rowspan="@s.rowspan">@s.infotext</td>
+                }
+            </tr>
+        }
+    </table>
+</div>

@@ -31,6 +31,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                <icon vehicle-type="@item.VehicleType"></icon>
                 @Html.DisplayFor(modelItem => item.VehicleType)
             </td>
             <td>

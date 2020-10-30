@@ -21,5 +21,9 @@ namespace GarageMVC.ViewModels
 
         [DisplayName("Parked time")]
         public int ParkedHours { get; set; }
+
+        [DisplayName("Status")]
+        public bool Status { get; set; }
+
     }
 }

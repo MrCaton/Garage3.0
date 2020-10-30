@@ -12,7 +12,8 @@ using GarageMVC.ViewModels;
 using Microsoft.Extensions.Options;
 using GarageMVC.Common;
 using System.Net.WebSockets;
-
+using System.Text;
+using Microsoft.Extensions.Options;
 
 namespace GarageMVC.Controllers
 {
@@ -44,11 +45,8 @@ namespace GarageMVC.Controllers
                 LicenceNr = v.LicenceNr,
                 ParkedHours = Convert.ToInt32((DateTime.Now - v.ArrivalTime).TotalHours)
             });
-            
-
 
             return View(indexList.ToList());
-
         }
 
         // GET: Vehicles/Details/5
@@ -183,6 +181,72 @@ namespace GarageMVC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> Parking()
+        {
+            var vTypes = _context.VehicleType2s.ToList();
+            var model = new Parking();
+            var parked = _context.Spots.Include(s => s.Vehicle).OrderBy(s => s.SpotNr);
+            var spotList = new List<SpotDto>();
+            var lastVehicleId = -1;
+            for(int i=0; i<garageSettings.Value.Size; i++)
+            {
+                var spot = parked.Where(x => x.SpotNr == i).SingleOrDefault();
+                if (spot != null) 
+                {
+                    if(spot.VehicleId != lastVehicleId)
+                    {
+                        VehicleType2 vType = vTypes.Where(v => v.Id == spot.Vehicle.VehicleType2Id).Single();
+                        spotList.Add(new SpotDto(i, vType.Size, vType.Name));
+                        lastVehicleId = spot.VehicleId.Value;
+                    }
+                    else
+                    {
+                        spotList.Add(new SpotDto(i, 0, null));
+                    }
+                }
+                else
+                {
+                    spotList.Add(new SpotDto(i, 0, "free"));
+                }
+            }
+            model.Spots = spotList.ToArray();
+            return View(model);
+        }
+        public async Task<IActionResult> Search()
+        {
+            var list = await _context.Vehicles.Include(v => v.VehicleType2).ToListAsync();
+            var simpleList = list.Select(v =>
+                new Vehicle
+                {
+                    Id = v.Id,
+                    //VehicleType = v.VehicleType2.Name.ToString(),
+                    LicenceNr = v.LicenceNr,
+                    ArrivalTime = v.ArrivalTime,
+                });
+            return View(simpleList.ToList());
+        }
+
+        public async Task<IActionResult> Filter(string licenseNrContains)
+        {
+            var filteredVehicles = (string.IsNullOrWhiteSpace(licenseNrContains)) ?
+                _context.Vehicles.Include(v => v.VehicleType2) :
+                _context.Vehicles.Include(v => v.VehicleType2)
+                                 .Where(v => v.LicenceNr.Contains(licenseNrContains));
+
+            var filteredSimpleVehicles = filteredVehicles
+                .Select(v => new Vehicle
+                {
+                    Id = v.Id,
+                    VehicleType2Id = v.VehicleType2Id,
+                    LicenceNr = v.LicenceNr,
+                    ArrivalTime = v.ArrivalTime,
+                });
+
+            var model = await filteredSimpleVehicles.ToListAsync();
+
+            return View(nameof(Search), model);
+        }
+
         private bool VehicleExists(int id)
         {
             return _context.Vehicles.Any(e => e.Id == id);
@@ -212,14 +276,26 @@ namespace GarageMVC.Controllers
 
             var type = await _context.VehicleType2s.FirstOrDefaultAsync(t => t.Id == vehicle.VehicleType2Id);
 
-
             var receipt = mapper.Map<ReceiptViewModel>(vehicle);
 
             receipt.UserName = member.UserName;
             receipt.DepartureTime = DateTime.Now;
             receipt.ParkedHours = Convert.ToInt32((DateTime.Now - vehicle.ArrivalTime).TotalHours);
             receipt.Price = priceSettings.Value.Price * Convert.ToInt32((DateTime.Now - vehicle.ArrivalTime).TotalHours) * type.Size;
-            // add spotnr(s)
+            
+            // Use Linq and StringBuilder to pass a string with all the parkingspots that the vehicle occupies.
+            var spotlist = _context.Spots.Where(s => s.VehicleId == vehicle.Id).Select(s => s.SpotNr).ToList();
+            var sb = new StringBuilder();
+            sb.Append($"{spotlist[0]}");
+
+            if (spotlist.Count > 1)
+            {
+                foreach (var item in spotlist.Skip(1))
+                {
+                    sb.Append($", {item}");
+                }
+            }
+            receipt.SpotNr =  sb.ToString();
 
             var result = UnparkVehicle(vehicle);
 
@@ -259,7 +335,7 @@ namespace GarageMVC.Controllers
                          .Select(s => s.SpotNr)
                          .ToList();
 
-            parked.Add(maxGarageSize); // add garage wall as a "parking spot"
+            parked.Add(maxGarageSize); // add garage wall as a "taken spot"
 
             var testSpot = 0;
             foreach(var parkedSpot in parked)
@@ -288,7 +364,7 @@ namespace GarageMVC.Controllers
             // Park the vehicle
             for (int i = 0; i < vType.Size; i++)
             {
-                _context.Spots.Add(new Spot()
+                _context.Spots.Add(new Models.Entities.Spot()
                 {
                     SpotNr = spot.Value + i,
                     VehicleId = vehicle.Id
@@ -296,6 +372,30 @@ namespace GarageMVC.Controllers
             }
             _context.SaveChanges();
             return new GarageResult(true, "Vehicle parked successfully!");
+        }
+
+        public async Task<IActionResult> Statistics()
+        {
+            var vehicles = await _context.Vehicles.ToListAsync();
+            var types = await _context.VehicleType2s.ToListAsync();
+
+            var model = new ViewModels.Statistics();
+            var createdVehicleStats = new Dictionary<string, int>();
+
+            foreach(var type in types)
+            {
+                var nrOf = vehicles.Count(v => v.VehicleType2Id == type.Id);
+                createdVehicleStats.Add(type.Name, nrOf);
+            }
+
+            model.NrOfCreatedVehicles = createdVehicleStats;
+
+            model.TotalNrOfWheels = vehicles.Sum(v => v.NrOfWheels);
+
+            var now = DateTime.Now;
+            var totalHours = vehicles.Sum(v => Convert.ToInt32((now - v.ArrivalTime).TotalHours));
+
+            return View(model);
         }
 
         private GarageResult UnparkVehicle(Vehicle vehicle)

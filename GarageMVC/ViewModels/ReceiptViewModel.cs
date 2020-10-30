@@ -15,7 +15,7 @@ namespace GarageMVC.ViewModels
         public string LicenceNr { get; set; }
 
         [DisplayName("Parking Spot(s)")]
-        public int SpotNr { get; set; }
+        public string SpotNr { get; set; }
         
         [DisplayName("Time of arrival")]
         public DateTime ArrivalTime { get; set; }
@@ -28,6 +28,8 @@ namespace GarageMVC.ViewModels
 
         [DisplayName("Parked time")]
         public int ParkedHours { get; set; }
+
+        
 
     }
 }

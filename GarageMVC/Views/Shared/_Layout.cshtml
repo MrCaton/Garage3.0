@@ -106,6 +106,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
+                <img src='/img/garage.svg' width='25px'; height='25px'; style="padding-right: 0px; margin-right:5px">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Garage 3.0</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -117,16 +118,13 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Vehicles" asp-action="Index">List vehicles</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Vehicles" asp-action="Create">Park new vehicle</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Vehicles" asp-action="Search">Search vehicles</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ParkedVehicles" asp-action="Search">Search vehicles</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Vehicles" asp-action="Statistics">Statistics</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ParkedVehicles" asp-action="Statistics">Statistics</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ParkedVehicles" asp-action="Parking">Parking</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Vehicles" asp-action="Parking">Parking</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="VehicleType2" asp-action="Create">Add Vehicle Types</a>
@@ -148,10 +146,10 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Members" asp-action="Delete">Delete member</a>*@
 
                         @*<li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Members" asp-action="Search">Search member</a>
-                            </li>*@
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Members" asp-action="Search">Search member</a>
+                </li>*@
 
-                        
+
 
                     </div>
                     @*</div>*@
@@ -166,7 +164,9 @@
 
                     
                     <form class="modal-content animate" action="/action_page.php">
-                      
+                        @*<div class="imgcontainer">
+                    <img src="img_avatar2.png" alt="Avatar" class="avatar">
+                </div>*@
 
                         <div class="container">
                             <label for="uname"><b>Username</b></label>

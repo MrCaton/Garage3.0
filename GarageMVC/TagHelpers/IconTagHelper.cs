@@ -26,6 +26,7 @@ namespace GarageMVC.TagHelpers
             var airplane = "/img/airplane.svg";
             var bus = "/img/bus.svg";
             var boat = "/img/boat.svg";
+            var garage = "/img/garage.svg";
 
             if (vehicleType == "Car")
             {
@@ -47,7 +48,10 @@ namespace GarageMVC.TagHelpers
             {
                 icon = $"<img src='{boat}' width='20px';height='20px';>";
             }
-
+            else
+            {
+                icon = $"<img src='{garage}' width='20px';height='20px';>";
+            }
             output.Content.SetHtmlContent(icon);
         }
     }

@@ -269,11 +269,11 @@ namespace GarageMVC.Controllers
             var vehicles = await _context.ParkedVehicle.ToListAsync();
 
             var model = new ViewModels.Statistics();
-            model.ParkedCars = vehicles.Where(v => v.VehicleType == VehicleType.Car).Count();
-            model.ParkedMotorcycles = vehicles.Where(v => v.VehicleType == VehicleType.Motorcycle).Count();
-            model.ParkedBuses = vehicles.Where(v => v.VehicleType == VehicleType.Bus).Count();
-            model.ParkedAirplanes = vehicles.Where(v => v.VehicleType == VehicleType.Airplane).Count();
-            model.ParkedBoats = vehicles.Where(v => v.VehicleType == VehicleType.Boat).Count();
+            //model.ParkedCars = vehicles.Where(v => v.VehicleType == VehicleType.Car).Count();
+            //model.ParkedMotorcycles = vehicles.Where(v => v.VehicleType == VehicleType.Motorcycle).Count();
+            //model.ParkedBuses = vehicles.Where(v => v.VehicleType == VehicleType.Bus).Count();
+            //model.ParkedAirplanes = vehicles.Where(v => v.VehicleType == VehicleType.Airplane).Count();
+            //model.ParkedBoats = vehicles.Where(v => v.VehicleType == VehicleType.Boat).Count();
 
             model.TotalNrOfWheels = vehicles.Sum(v => v.NrOfWheels);
 
@@ -334,10 +334,10 @@ namespace GarageMVC.Controllers
 
 
 
-        public async Task<IActionResult> Parking()
-        {
-            var model = new Parking() ;
-            model.FreeSlots = GetGarage();
+        //public async Task<IActionResult> Parking()
+        //{
+        //    var model = new Parking() ;
+        //    model.FreeSlots = GetGarage();
 
             //if (model.FreeSlots == null)
             //{
@@ -356,8 +356,8 @@ namespace GarageMVC.Controllers
                 //}
 
 
-                return View(model);
-        }
+        //        return View(model);
+        //}
         
 
 

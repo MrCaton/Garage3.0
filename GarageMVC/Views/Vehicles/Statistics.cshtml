@@ -1,0 +1,42 @@
+﻿@model GarageMVC.ViewModels.Statistics
+
+@{
+    ViewData["Title"] = "Statistics";
+}
+<h1>Statistics for the garage</h1>
+<div class="row">
+    <div class="col">
+        <table class="table">
+            <tbody>
+                @foreach (var vType in Model.NrOfCreatedVehicles)
+                {
+                    <tr>
+                        <td>
+                            Nr of vehicles of type @vType.Key :
+                        </td>
+                        <td class="text-right">
+                            @vType.Value
+                        </td>
+                    </tr>
+                }
+
+                <tr>
+                    <td>
+                        Total number of wheels:
+                    </td>
+                    <td class="text-right">
+                        @Model.TotalNrOfWheels
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Total pending parking value:
+                    </td>
+                    <td class="text-right">
+                        @Model.ParkingValuePending kr
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
