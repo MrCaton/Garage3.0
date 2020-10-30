@@ -249,7 +249,7 @@ namespace GarageMVC.Controllers
 
             var model = await filteredViewVehicles.ToListAsync();
 
-            return View(nameof(Search), model);
+            return View(nameof(Index), model);
         }
 
         private bool VehicleExists(int id)
