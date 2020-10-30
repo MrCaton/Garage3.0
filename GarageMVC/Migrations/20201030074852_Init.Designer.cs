@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GarageMVC.Migrations
 {
     [DbContext(typeof(GarageMVCContext))]
-    [Migration("20201029083449_Init")]
+    [Migration("20201030074852_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,11 +47,35 @@ namespace GarageMVC.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 3,
+                            Id = 1,
                             Email = "bill@gmail.com",
                             FirstName = "Billy",
                             LastName = "Buch",
-                            UserName = "BBch"
+                            UserName = "BBuch"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "bob@gmail.com",
+                            FirstName = "Bob",
+                            LastName = "Miller",
+                            UserName = "BMiller"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "andy@gmail.com",
+                            FirstName = "Andy",
+                            LastName = "Anderson",
+                            UserName = "AAnderson"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Email = "pia@gmail.com",
+                            FirstName = "Pia",
+                            LastName = "Persson",
+                            UserName = "PPersson"
                         });
                 });
 
@@ -107,6 +131,9 @@ namespace GarageMVC.Migrations
                     b.Property<int>("NrOfWheels")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
                     b.Property<int>("VehicleType2Id")
                         .HasColumnType("int");
 
@@ -139,9 +166,33 @@ namespace GarageMVC.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 6,
+                            Id = 1,
                             Name = "Motorcycle",
                             Size = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Car",
+                            Size = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Bus",
+                            Size = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Boat",
+                            Size = 3
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Airplane",
+                            Size = 3
                         });
                 });
 

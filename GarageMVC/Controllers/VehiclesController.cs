@@ -35,16 +35,22 @@ namespace GarageMVC.Controllers
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
+            // LINQ query för att see distinct Spot.ID, få ut till lista
+
+            var idlist = _context.Spots.Select(i => i.VehicleId).Distinct().ToList();
+
             var list = await _context.Vehicles.ToListAsync();
-            var indexList = list.Select(v => 
-            new VehicleIndexViewModel 
-            { 
+            var indexList = list.Select(v =>
+            new VehicleIndexViewModel
+            {
                 Id = v.Id,
                 UserName = _context.Members.FirstOrDefaultAsync(m => m.Id == v.MemberId).Result.UserName,
                 VehicleType = _context.VehicleType2s.FirstOrDefaultAsync(t => t.Id == v.VehicleType2Id).Result.Name,
                 LicenceNr = v.LicenceNr,
-                ParkedHours = Convert.ToInt32((DateTime.Now - v.ArrivalTime).TotalHours)
-            });
+                ParkedHours = Convert.ToInt32((DateTime.Now - v.ArrivalTime).TotalHours),
+                Status = idlist.Contains(v.Id)
+                
+            }); ;
 
             return View(indexList.ToList());
         }
@@ -70,7 +76,6 @@ namespace GarageMVC.Controllers
         // GET: Vehicles/Create
         public IActionResult Create()
         {
-            // SelectListItem binda till VehicleType2.Name
             return View();
         }
 

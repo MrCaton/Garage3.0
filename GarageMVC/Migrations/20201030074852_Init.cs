@@ -69,6 +69,7 @@ namespace GarageMVC.Migrations
                     Model = table.Column<string>(maxLength: 50, nullable: true),
                     NrOfWheels = table.Column<int>(nullable: false),
                     ArrivalTime = table.Column<DateTime>(nullable: false),
+                    Status = table.Column<bool>(nullable: false),
                     VehicleType2Id = table.Column<int>(nullable: false),
                     MemberId = table.Column<int>(nullable: false)
                 },
@@ -112,12 +113,25 @@ namespace GarageMVC.Migrations
             migrationBuilder.InsertData(
                 table: "Members",
                 columns: new[] { "Id", "Email", "FirstName", "LastName", "UserName" },
-                values: new object[] { 3, "bill@gmail.com", "Billy", "Buch", "BBch" });
+                values: new object[,]
+                {
+                    { 1, "bill@gmail.com", "Billy", "Buch", "BBuch" },
+                    { 2, "bob@gmail.com", "Bob", "Miller", "BMiller" },
+                    { 3, "andy@gmail.com", "Andy", "Anderson", "AAnderson" },
+                    { 4, "pia@gmail.com", "Pia", "Persson", "PPersson" }
+                });
 
             migrationBuilder.InsertData(
                 table: "VehicleType2s",
                 columns: new[] { "Id", "Name", "Size" },
-                values: new object[] { 6, "Motorcycle", 1 });
+                values: new object[,]
+                {
+                    { 1, "Motorcycle", 1 },
+                    { 2, "Car", 1 },
+                    { 3, "Bus", 2 },
+                    { 4, "Boat", 3 },
+                    { 5, "Airplane", 3 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Spots_VehicleId",
