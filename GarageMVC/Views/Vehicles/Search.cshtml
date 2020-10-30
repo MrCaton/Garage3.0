@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GarageMVC.Models.Entities.Vehicle>
+﻿@model IEnumerable<GarageMVC.ViewModels.VehicleIndexViewModel>
 @inject GarageMVC.Services.ITypeMemberSelectService service
 
 @{
@@ -11,11 +11,6 @@
     <div class="input-group mb-4">
         <input type="text" class="form-control" name="licenseNrContains" placeholder="Search licence number" />
         <div class="input-group-append">
-            <label  class="control-label"></label>
-            <select  asp-items="@await service.SelectTypes()" class="form-control"></select>
-            <span class="text-danger"></span>
-        </div>
-        <div class="input-group-append">
             <button type="submit" class="btn btn-primary">Search</button>
         </div>
     </div>
@@ -25,13 +20,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.VehicleType2)
+                @Html.DisplayNameFor(model => model.VehicleType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.LicenceNr)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ArrivalTime)
+                @Html.DisplayNameFor(model => model.ParkedHours)
             </th>
             <th></th>
         </tr>
@@ -41,19 +39,22 @@
         {
             <tr>
                 <td>
-                    <icon vehicle-type="@item.VehicleType2">" "</icon>
-                    @Html.DisplayFor(modelItem => item.VehicleType2)
+                    <icon vehicle-type="@item.VehicleType"></icon>
+                    @Html.DisplayFor(modelItem => item.VehicleType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.LicenceNr)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ArrivalTime)
+                    @Html.DisplayFor(modelItem => item.ParkedHours) hour(s)
                 </td>
                 <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Receipt" asp-route-id="@item.Id">Unpark</a> |
-                    <a asp-action="Edit" asp-route-id="@item.Id">Change</a>
+                    <a asp-action="Receipt" asp-route-id="@item.Id">Unpark</a>
                 </td>
             </tr>
         }

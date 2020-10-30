@@ -215,34 +215,39 @@ namespace GarageMVC.Controllers
         public async Task<IActionResult> Search()
         {
             var list = await _context.Vehicles.Include(v => v.VehicleType2).ToListAsync();
-            var simpleList = list.Select(v =>
-                new Vehicle
+            var searchList = list.Select(v =>
+                new VehicleIndexViewModel
                 {
                     Id = v.Id,
-                    //VehicleType = v.VehicleType2.Name.ToString(),
+                    UserName = _context.Members.FirstOrDefaultAsync(m => m.Id == v.MemberId).Result.UserName,
+                    VehicleType = _context.VehicleType2s.FirstOrDefaultAsync(t => t.Id == v.VehicleType2Id).Result.Name,
                     LicenceNr = v.LicenceNr,
-                    ArrivalTime = v.ArrivalTime,
+                    ParkedHours = Convert.ToInt32((DateTime.Now - v.ArrivalTime).TotalHours)
+
                 });
-            return View(simpleList.ToList());
+            return View(searchList.ToList());
         }
 
         public async Task<IActionResult> Filter(string licenseNrContains)
         {
             var filteredVehicles = (string.IsNullOrWhiteSpace(licenseNrContains)) ?
-                _context.Vehicles.Include(v => v.VehicleType2) :
-                _context.Vehicles.Include(v => v.VehicleType2)
-                                 .Where(v => v.LicenceNr.Contains(licenseNrContains));
+                _context.Vehicles
+                .Include(v => v.VehicleType2).Include(v => v.Member) :
+                _context.Vehicles
+                .Include(v => v.VehicleType2).Include(v => v.Member)
+                .Where(v => v.LicenceNr.Contains(licenseNrContains));
 
-            var filteredSimpleVehicles = filteredVehicles
-                .Select(v => new Vehicle
+            var filteredViewVehicles = filteredVehicles
+                .Select(v => new VehicleIndexViewModel
                 {
                     Id = v.Id,
-                    VehicleType2Id = v.VehicleType2Id,
+                    UserName = v.Member.UserName,
+                    VehicleType = v.VehicleType2.Name,
                     LicenceNr = v.LicenceNr,
-                    ArrivalTime = v.ArrivalTime,
+                    ParkedHours = Convert.ToInt32((DateTime.Now - v.ArrivalTime).TotalHours)
                 });
 
-            var model = await filteredSimpleVehicles.ToListAsync();
+            var model = await filteredViewVehicles.ToListAsync();
 
             return View(nameof(Search), model);
         }
