@@ -206,15 +206,28 @@ namespace GarageMVC.Controllers
             {
                 return NotFound();
             }
-           var profile = await _context.Members
+
+            var idlist = _context.Spots.Select(i => i.VehicleId).Distinct().ToList();
+
+            var profile = await _context.Members
                 .Include(m => m.Vehicles)
                 .Select(m => new ProfileViewModel
                 {
                     Id = m.Id,
                     UserName = m.UserName,
-                    Vehicles = m.Vehicles
+                    Vehicles = m.Vehicles,
+                    //Status = idlist.Contains(v.Id)
                 })
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            var dict = new Dictionary<int, bool>();
+
+            foreach (var item in profile.Vehicles)
+            {
+                dict.Add(item.Id, idlist.Contains(item.Id));
+            }
+
+            profile.StatusList = dict;
            
             
 

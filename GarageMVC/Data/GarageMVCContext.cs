@@ -49,14 +49,12 @@ namespace GarageMVC.Data
                 new Member { Id = 2, FirstName = "Ivan", LastName = "Araque", Email = "ivan@gmail.com", UserName = "MrCaton" },
                 new Member { Id = 3, FirstName = "David", LastName = "Nokto", Email = "david@gmail.com", UserName = "D.Nokto" },
                 new Member { Id = 4, FirstName = "Mats", LastName = "Nilsson", Email = "mats@gmail.com", UserName = "Matslearning" });
-            modelBuilder.Entity<Vehicle>().HasData(
-                new Vehicle {Id=1, LicenceNr="CARBBC", Color="Green", Brand="Opel", Model="Corsa", NrOfWheels=4,ArrivalTime = DateTime.Now.AddDays(-7.0) , VehicleType2Id=2, MemberId=1},
-                new Vehicle { Id = 2, LicenceNr = "NAVI94", Color = "Black", Brand = "Volvo", Model = "XC90", NrOfWheels = 4, ArrivalTime = DateTime.Now.AddDays(-5.0), VehicleType2Id = 2, MemberId = 2 },
-                new Vehicle { Id = 3, LicenceNr = "SKTHMH", Color = "Black", Brand = "Yamaha", Model = "Super", NrOfWheels = 2, ArrivalTime = DateTime.Now.AddDays(-2.0), VehicleType2Id = 1, MemberId = 3 },
-                new Vehicle { Id = 4, LicenceNr = "BUSBUS", Color = "Blue", Brand = "Mercedes", Model = "Ultra", NrOfWheels = 10, ArrivalTime = DateTime.Now.AddDays(-1.0), VehicleType2Id = 3, MemberId = 4 }
-
-
-                );
+            //modelBuilder.Entity<Vehicle>().HasData(
+            //    new Vehicle {Id=1, LicenceNr="CARBBC", Color="Green", Brand="Opel", Model="Corsa", NrOfWheels=4,ArrivalTime = DateTime.Now.AddDays(-7.0) , VehicleType2Id=2, MemberId=1},
+            //    new Vehicle { Id = 2, LicenceNr = "NAVI94", Color = "Black", Brand = "Volvo", Model = "XC90", NrOfWheels = 4, ArrivalTime = DateTime.Now.AddDays(-5.0), VehicleType2Id = 2, MemberId = 2 },
+            //    new Vehicle { Id = 3, LicenceNr = "SKTHMH", Color = "Black", Brand = "Yamaha", Model = "Super", NrOfWheels = 2, ArrivalTime = DateTime.Now.AddDays(-2.0), VehicleType2Id = 1, MemberId = 3 },
+            //    new Vehicle { Id = 4, LicenceNr = "BUSBUS", Color = "Blue", Brand = "Mercedes", Model = "Ultra", NrOfWheels = 10, ArrivalTime = DateTime.Now.AddDays(-1.0), VehicleType2Id = 3, MemberId = 4 }
+                //);
 
             //modelBuilder.Entity<Member>().HasData(
             //new Member { Id = 1, FirstName = "Nelson", LastName = "Mandela", Email = "nelsonmandela@gmail.com", UserName = "Nmandela" },
