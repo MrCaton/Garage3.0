@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GarageMVC.Migrations
 {
     [DbContext(typeof(GarageMVCContext))]
-    [Migration("20201030094145_init")]
-    partial class init
+    [Migration("20201030122637_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -146,7 +146,7 @@ namespace GarageMVC.Migrations
                         new
                         {
                             Id = 1,
-                            ArrivalTime = new DateTime(2020, 10, 23, 10, 41, 45, 317, DateTimeKind.Local).AddTicks(9450),
+                            ArrivalTime = new DateTime(2020, 10, 23, 13, 26, 36, 979, DateTimeKind.Local).AddTicks(6786),
                             Brand = "Opel",
                             Color = "Green",
                             LicenceNr = "CARBBC",
@@ -158,7 +158,7 @@ namespace GarageMVC.Migrations
                         new
                         {
                             Id = 2,
-                            ArrivalTime = new DateTime(2020, 10, 25, 10, 41, 45, 320, DateTimeKind.Local).AddTicks(5163),
+                            ArrivalTime = new DateTime(2020, 10, 25, 13, 26, 36, 987, DateTimeKind.Local).AddTicks(8037),
                             Brand = "Volvo",
                             Color = "Black",
                             LicenceNr = "NAVI94",
@@ -170,7 +170,7 @@ namespace GarageMVC.Migrations
                         new
                         {
                             Id = 3,
-                            ArrivalTime = new DateTime(2020, 10, 28, 10, 41, 45, 320, DateTimeKind.Local).AddTicks(5211),
+                            ArrivalTime = new DateTime(2020, 10, 28, 13, 26, 36, 987, DateTimeKind.Local).AddTicks(8196),
                             Brand = "Yamaha",
                             Color = "Black",
                             LicenceNr = "SKTHMH",
@@ -182,7 +182,7 @@ namespace GarageMVC.Migrations
                         new
                         {
                             Id = 4,
-                            ArrivalTime = new DateTime(2020, 10, 29, 10, 41, 45, 320, DateTimeKind.Local).AddTicks(5217),
+                            ArrivalTime = new DateTime(2020, 10, 29, 13, 26, 36, 987, DateTimeKind.Local).AddTicks(8211),
                             Brand = "Mercedes",
                             Color = "Blue",
                             LicenceNr = "BUSBUS",

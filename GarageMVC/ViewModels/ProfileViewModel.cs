@@ -12,6 +12,8 @@ namespace GarageMVC.ViewModels
         public string UserName { get;  set; }
         public string LicenceNr { get;  set; }
         public string VehicleType { get;  set; }
+
+        public Dictionary<int, bool> StatusList { get; set; }
         public ICollection<Vehicle> Vehicles { get; set; }
     }
 }

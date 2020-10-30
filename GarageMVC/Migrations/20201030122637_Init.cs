@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GarageMVC.Migrations
 {
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -136,10 +136,10 @@ namespace GarageMVC.Migrations
                 columns: new[] { "Id", "ArrivalTime", "Brand", "Color", "LicenceNr", "MemberId", "Model", "NrOfWheels", "VehicleType2Id" },
                 values: new object[,]
                 {
-                    { 3, new DateTime(2020, 10, 28, 10, 41, 45, 320, DateTimeKind.Local).AddTicks(5211), "Yamaha", "Black", "SKTHMH", 3, "Super", 2, 1 },
-                    { 1, new DateTime(2020, 10, 23, 10, 41, 45, 317, DateTimeKind.Local).AddTicks(9450), "Opel", "Green", "CARBBC", 1, "Corsa", 4, 2 },
-                    { 2, new DateTime(2020, 10, 25, 10, 41, 45, 320, DateTimeKind.Local).AddTicks(5163), "Volvo", "Black", "NAVI94", 2, "XC90", 4, 2 },
-                    { 4, new DateTime(2020, 10, 29, 10, 41, 45, 320, DateTimeKind.Local).AddTicks(5217), "Mercedes", "Blue", "BUSBUS", 4, "Ultra", 10, 3 }
+                    { 3, new DateTime(2020, 10, 28, 13, 26, 36, 987, DateTimeKind.Local).AddTicks(8196), "Yamaha", "Black", "SKTHMH", 3, "Super", 2, 1 },
+                    { 1, new DateTime(2020, 10, 23, 13, 26, 36, 979, DateTimeKind.Local).AddTicks(6786), "Opel", "Green", "CARBBC", 1, "Corsa", 4, 2 },
+                    { 2, new DateTime(2020, 10, 25, 13, 26, 36, 987, DateTimeKind.Local).AddTicks(8037), "Volvo", "Black", "NAVI94", 2, "XC90", 4, 2 },
+                    { 4, new DateTime(2020, 10, 29, 13, 26, 36, 987, DateTimeKind.Local).AddTicks(8211), "Mercedes", "Blue", "BUSBUS", 4, "Ultra", 10, 3 }
                 });
 
             migrationBuilder.CreateIndex(
