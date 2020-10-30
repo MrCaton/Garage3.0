@@ -13,6 +13,7 @@ namespace GarageMVC.TagHelpers
     {
         public bool Status { get; set; }
         public int Key { get; set; }
+        public string Controller { get; set; }
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             output.TagName = "span";
@@ -28,9 +29,9 @@ namespace GarageMVC.TagHelpers
                 //parkingstatus = "links for unparking";
 
                 output.Content.SetHtmlContent(
-                $@"<a href=""../Vehicles/Edit/{Key}"">Edit</a>
-                   <a href=""../Vehicles/Details/{Key}"">Details</a>
-                   <a href=""../Vehicles/Receipt/{Key}"">Unpark</a>"
+                $@"<a href=""../{Controller}/Edit/{Key}"">Edit</a>
+                   <a href=""../{Controller}/Details/{Key}"">Details</a>
+                   <a href=""../{Controller}/Receipt/{Key}"">Unpark</a>"
                    );
             }
             else
@@ -38,9 +39,9 @@ namespace GarageMVC.TagHelpers
                 //parkingstatus = "links for parking and deleting";
 
                 output.Content.SetHtmlContent(
-                $@"<a href=""../Vehicles/Edit/{Key}"">Edit</a>
-                   <a href=""../Vehicles/Details/{Key}"">Details</a>
-                   <a href=""../Vehicles/Delete/{Key}"">Delete</a>"
+                $@"<a href=""../{Controller}/Edit/{Key}"">Edit</a>
+                   <a href=""../{Controller}/Details/{Key}"">Details</a>
+                   <a href=""../{Controller}/Delete/{Key}"">Delete</a>"
                    );
             }
 

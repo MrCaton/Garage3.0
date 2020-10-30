@@ -57,10 +57,10 @@
                     <dd class="col-sm-9">
                         @*@Model.StatusList[vehicle.Id]*@
                         <picon status="@Model.StatusList[vehicle.Id]"></picon>
-                        <parkingstatus status="@Model.StatusList[vehicle.Id]" key="vehicle.Id"></parkingstatus>
-                        @*<a asp-controller="ParkedVehicles" asp-action="Details" asp-route-regNum="@vehicle.LicenceNr">
+                        @*<parkingstatus controller="Vehicles" status="@Model.StatusList[vehicle.Id]" key="vehicle.Id"></parkingstatus>*@
+                        <a asp-controller="Vehicles" asp-action="Details" asp-route-id="@vehicle.Id">
             <div class="badge badge-success p-1">Park</div>
-        </a>*@
+        </a>
 
                     </dd>
                 </dl>

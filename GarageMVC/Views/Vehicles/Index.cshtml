@@ -54,7 +54,7 @@
                 @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> | 
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Receipt" asp-route-id="@item.Id">Unpark</a>*@
-                <parkingstatus status="item.Status" key="item.Id"></parkingstatus>
+                <parkingstatus controller="Vehicles" status="item.Status" key="item.Id"></parkingstatus>
             </td>
         </tr>
 }
