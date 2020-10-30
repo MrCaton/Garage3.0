@@ -51,21 +51,18 @@
     </p>
 </div>
 
-@*
-    TEST VIEW VEHICLES
-*@
+
 <div>
 
-    @*@if (Model.Vehicles.Count() > 0)
-        {*@
+    
             @foreach (var vehicle in Model.Vehicles)
             {
                 <dl class="row">
                     <dt class="col-sm-3">
-                        @*<a asp-controller="Vehicles" asp-action="Details" asp-route-id="@vehicle.LicenceNr">*@
+                       
                             @Html.DisplayNameFor(v => vehicle.LicenceNr)
                             @Html.DisplayFor(v => vehicle.LicenceNr)
-                        @*</a>*@
+                       
                     </dt>
                     <dd class="col-sm-9">
                         @*@Model.StatusList[vehicle.Id]*@
@@ -79,7 +76,7 @@
         </dl>
 
     }
-    @*}*@
+   
 
 
 
@@ -88,9 +85,7 @@
 
 
 
-@*
-    END TEST
-*@
+
 
 
 
