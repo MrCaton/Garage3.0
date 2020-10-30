@@ -63,28 +63,14 @@ namespace GarageMVC.Data
             //new Member { Id = 2, FirstName = "Billy", LastName = "Buch", Email = "bill@gmail.com", UserName = "BBch" }
             //);
 
-            //modelBuilder.Entity<Spot>().HasData(
-            //    new Spot { Id = 1},
-            //    new Spot { Id = 2}
-            //    );
 
-            //modelBuilder.Entity<VehicleSpot>().HasData(
-            //    new VehicleSpot { VehicleId = 1, SpotId = 1, },
-            //    new VehicleSpot { VehicleId = 2, SpotId = 2, }
-            //    );
 
             //modelBuilder.Entity<Vehicle>().HasData(
             //    new Vehicle { Id = 1, LicenceNr = "ABC111", Brand = "Brand1", Model = "Model1", Color = "Black", NrOfWheels = 4, ArrivalTime = DateTime.Now.AddDays(-1.0), VehicleType2 = a, Member = b },
             //    new Vehicle { Id = 2, LicenceNr = "ABC222", Brand = "Brand2", Model = "Model2", Color = "White", NrOfWheels = 4, ArrivalTime = DateTime.Now.AddDays(-2.0), VehicleType2 = a, Member = b }
             //    );
 
-            //modelBuilder.Entity<VehicleType2>().HasData(
-            //    new VehicleType2 { Id = 1, Name = "Car", Size = 1 },
-            //    new VehicleType2 { Id = 2, Name = "Bus", Size = 2 },
-            //    new VehicleType2 { Id = 3, Name = "Boat", Size = 3 },
-            //    new VehicleType2 { Id = 4, Name = "Airplane", Size = 3 },
-            //    new VehicleType2 { Id = 5, Name = "Motorcycle", Size = 1 }
-            //    );
+
 
 
         }

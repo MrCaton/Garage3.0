@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,7 +32,7 @@ namespace GarageMVC.Models.Entities
         [Display(Name = "Time of arrival")]
         public DateTime ArrivalTime { get; set; }
 
-
+ 
         // Foregin Keys
         public int VehicleType2Id { get; set; }
         public int MemberId { get; set; }
