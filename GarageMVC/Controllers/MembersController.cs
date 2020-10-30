@@ -214,6 +214,9 @@ namespace GarageMVC.Controllers
                 .Select(m => new ProfileViewModel
                 {
                     Id = m.Id,
+                    FirstName=m.FirstName,
+                    LastName=m.LastName,
+                    Email=m.Email,
                     UserName = m.UserName,
                     Vehicles = m.Vehicles,
                     //Status = idlist.Contains(v.Id)
