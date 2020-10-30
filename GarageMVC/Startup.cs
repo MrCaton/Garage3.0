@@ -33,7 +33,6 @@ namespace GarageMVC
             services.Configure<PriceSettings>(Configuration.GetSection("PriceOptions"));
             services.Configure<GarageSettings>(Configuration.GetSection("GarageOptions"));
             services.AddScoped<ITypeMemberSelectService, VehicleTypeSelectService>();
-            //services.AddScoped<ITypeMemberSelectService, MemberSelectService>();
 
             services.AddAutoMapper(typeof(Startup));
 
