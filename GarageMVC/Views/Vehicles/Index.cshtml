@@ -44,7 +44,16 @@
                 @Html.DisplayFor(modelItem => item.LicenceNr)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ParkedHours) hour(s)
+                @if (!item.Status)
+                {
+                    <a>-</a>;
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.ParkedHours) <a>hour(s)</a>;
+                }
+
+                @*@Html.DisplayFor(modelItem => item.ParkedHours) hour(s)*@
             </td>
             <td>
                 <picon status="@item.Status"></picon>
