@@ -141,9 +141,9 @@
 
                         <a class="nav-link text-dark" asp-area="" asp-controller="Members" asp-action="Index">List members</a>
                         <a class="nav-link text-dark" asp-area="" asp-controller="Members" asp-action="Create">Create new member</a>
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Members" asp-action="Details">Details member</a>
+                        @*<a class="nav-link text-dark" asp-area="" asp-controller="Members" asp-action="Details">Details member</a>
                         <a class="nav-link text-dark" asp-area="" asp-controller="Members" asp-action="Edit">Edit member</a>
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Members" asp-action="Delete">Delete member</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Members" asp-action="Delete">Delete member</a>*@
 
                         @*<li class="nav-item">
                     <a class="nav-link text-dark" asp-area="" asp-controller="Members" asp-action="Search">Search member</a>
@@ -155,20 +155,20 @@
                     @*</div>*@
 
                 </div>
-                <button onclick="document.getElementById('id01').style.display='block'" class="dropbtn">Login</button>
+                @*<button onclick="document.getElementById('id01').style.display='block'" class="dropbtn">Login</button>
 
-                <!-- The Modal -->
+                
                 <div id="id01" class="modal">
                     <span onclick="document.getElementById('id01').style.display='none'"
                           class="close" title="Close Modal">&times;</span>
 
-                    <!-- Modal Content -->
+                    
                     <form class="modal-content animate" action="/action_page.php">
                         @*<div class="imgcontainer">
                     <img src="img_avatar2.png" alt="Avatar" class="avatar">
                 </div>*@
 
-                        <div class="container">
+                        @*<div class="container">
                             <label for="uname"><b>Username</b></label>
                             <input type="text" placeholder="Enter Username" name="uname" required>
 
@@ -184,9 +184,9 @@
                         <div class="container" style="background-color:#f1f1f1">
                             <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
                             <span class="psw">Forgot <a href="#">password?</a></span>
-                        </div>
-                    </form>
-                </div>
+                        </div>*@
+                    @*</form>*@
+                @*</div>*@
             </div>
         </nav>
     </header>

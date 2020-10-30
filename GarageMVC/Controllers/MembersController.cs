@@ -9,16 +9,20 @@ using GarageMVC.Data;
 using GarageMVC.ViewModels;
 using GarageMVC.Models;
 using GarageMVC.Models.Entities;
+using AutoMapper;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Text;
 
 namespace GarageMVC.Controllers
 {
     public class MembersController : Controller
     {
         private readonly GarageMVCContext _context;
-
-        public MembersController(GarageMVCContext context)
+        private readonly IMapper mapper;
+        public MembersController(GarageMVCContext context, IMapper mapper)
         {
             _context = context;
+            this.mapper = mapper;
         }
 
         // GET: Members
@@ -47,17 +51,20 @@ namespace GarageMVC.Controllers
             {
                 return NotFound();
             }
-            //var model = new Member
-            //{
-            //    FirstName = member.FirstName,
-            //    LastName = member.LastName,
-            //    UserName = member.UserName,
-            //    Email = member.Email,
-            //    Vehicles = await _context.ParkedVehicle.Where(o => o.Id == member.Id).ToListAsync()
-            //};
+            var model = new Member
+            {
+                Id = member.Id,
+                FirstName = member.FirstName,
+                LastName = member.LastName,
+                UserName = member.UserName,
+                Email = member.Email,
+                Vehicles = member.Vehicles
+                //Vehicles = await _context.ParkedVehicle.Where(o => o.Id == member.Id).ToListAsync()
+            };
 
-            //return View(model);
-            return View(member);
+            return View(model);
+            //return View(member);
+
         }
 
         // GET: Members/Create
@@ -71,7 +78,7 @@ namespace GarageMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create( Member member)
+        public async Task<IActionResult> Create(Member member)
         {
             bool EmailExists = _context.Members.Any
                 (v => v.Email == member.Email);
@@ -85,7 +92,8 @@ namespace GarageMVC.Controllers
             {
                 ModelState.AddModelError("UserName", "User name already exists");
             }
-            else { 
+            else
+            {
                 if (ModelState.IsValid)
                 {
                     _context.Add(member);
@@ -117,7 +125,7 @@ namespace GarageMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id,  Member member)
+        public async Task<IActionResult> Edit(int id, Member member)
         {
             if (id != member.Id)
             {
@@ -191,6 +199,27 @@ namespace GarageMVC.Controllers
                 UserName = member.UserName,
                 VehicleCount = vehicles.Where(v => v.Id == member.Id).Count()
             };
+        }
+        public async Task<IActionResult> Profile(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+           var profile = await _context.Members
+                .Include(m => m.Vehicles)
+                .Select(m => new ProfileViewModel
+                {
+                    Id = m.Id,
+                    UserName = m.UserName,
+                    Vehicles = m.Vehicles
+                })
+                .FirstOrDefaultAsync(m => m.Id == id);
+           
+            
+
+
+            return View(profile);
         }
 
     }

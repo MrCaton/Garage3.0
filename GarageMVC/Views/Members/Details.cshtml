@@ -1,4 +1,5 @@
-﻿@model GarageMVC.Models.Entities.Member
+﻿@*@model GarageMVC.ViewModels.ProfileViewModel*@
+@model GarageMVC.Models.Entities.Member
 
 @{
     ViewData["Title"] = "Details";
@@ -11,22 +12,10 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FirstName)
+            @Html.DisplayNameFor(model => model.Id)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Email)
+            @Html.DisplayFor(model => model.Id)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.UserName)
@@ -35,48 +24,80 @@
             @Html.DisplayFor(model => model.UserName)
         </dd>
         @*<dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Password)
-        </dd>*@
+                @Html.DisplayNameFor(model => model.LicenceNr)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.LicenceNr)
+            </dd>*@
+        @*<dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.LicenceNr)
+            </dt>*@
+        @*<dd class="col-sm-10">
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.UserName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.UserName)
+            </dd>*@
+        @*<dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Password)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Password)
+            </dd>*@
+        @*<dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.VehicleType2Id)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.VehicleType2Id)
+            </dd>*@
+
     </dl>
+
     <p>
-        <a asp-controller="ParkedVehicles" asp-action="Create"> Add a new vehicle</a>
+        <a asp-controller="Vehicles" asp-action="Create"> Add a new vehicle</a>
     </p>
 </div>
 
 @*
     TEST VIEW VEHICLES
 *@
-<div >
-    
-    @if (Model.Vehicles.Count() > 0)
-    {
-        @foreach (var vehicle in Model.Vehicles)
+@*<div >
+
+        @if (Model.Vehicles.Count() > 0)
         {
-            <dl class="row">
-                <dt class="col-sm-3">
-                    <a asp-controller="Vehicles" asp-action="Details" asp-route-id="@vehicle.LicenceNr" >
-                        @Html.DisplayFor(v => vehicle.LicenceNr)
-                    </a>
-                </dt>
-                <dd class="col-sm-9">
-                  
-                        <a asp-controller="ParkedVehicles" asp-action="Details" asp-route-regNum="@vehicle.LicenceNr">
-                            <div class="badge badge-success p-1">Park</div>
+            @foreach (var vehicle in Model.Vehicles)
+            {
+                <dl class="row">
+                    <dt class="col-sm-3">
+                        <a asp-controller="Vehicles" asp-action="Details" asp-route-id="@vehicle.LicenceNr" >
+                            @Html.DisplayFor(v => vehicle.LicenceNr)
                         </a>
-                    
-                </dd>
-            </dl>
+                    </dt>
+                    <dd class="col-sm-9">
 
+                            <a asp-controller="ParkedVehicles" asp-action="Details" asp-route-regNum="@vehicle.LicenceNr">
+                                <div class="badge badge-success p-1">Park</div>
+                            </a>
+
+                    </dd>
+                </dl>
+
+            }
         }
-    }
- 
 
 
 
-</div>
+
+    </div>*@
 
 
 
