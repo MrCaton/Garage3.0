@@ -392,8 +392,16 @@ namespace GarageMVC.Controllers
 
             model.TotalNrOfWheels = vehicles.Sum(v => v.NrOfWheels);
 
+            var totalParkedSpots = _context.Spots.Count();
+            model.TotalParkedSpots = totalParkedSpots;
+
+            model.TotalSpots = garageSettings.Value.Size;
+
+            model.UnparkedSpots = model.TotalSpots - model.TotalParkedSpots;
+
             var now = DateTime.Now;
             var totalHours = vehicles.Sum(v => Convert.ToInt32((now - v.ArrivalTime).TotalHours));
+            model.ParkingValuePending = totalHours * priceSettings.Value.Price;
 
             return View(model);
         }

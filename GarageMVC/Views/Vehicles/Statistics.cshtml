@@ -28,6 +28,26 @@
                         @Model.TotalNrOfWheels
                     </td>
                 </tr>
+
+                <tr>
+                    <td>
+                        Number of spots used - out of the @Model.TotalSpots parking spots:
+                    </td>
+                    <td class="text-right">
+                        @Model.TotalParkedSpots
+                        
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Available spots left unparked:
+                    </td>
+                    <td class="text-right">
+                        @Model.UnparkedSpots
+                    </td>
+                </tr>
+
                 <tr>
                     <td>
                         Total pending parking value:

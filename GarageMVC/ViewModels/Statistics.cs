@@ -17,7 +17,12 @@ namespace GarageMVC.ViewModels
         [DataType(DataType.Currency)]
         public int ParkingValuePending { get; set; }
 
-        // public int ParkedVehicles { get;  set; }
-        // public int AvailableSlots { get;  set; }
+        public int TotalParkedSpots { get; set; }
+
+        public int UnparkedSpots { get; set; }
+
+        public int TotalSpots { get; set; }
+
+        public int ParkedVehicles { get;  set; }
     }
 }
