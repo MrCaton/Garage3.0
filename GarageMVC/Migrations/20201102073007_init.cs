@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GarageMVC.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -129,17 +129,6 @@ namespace GarageMVC.Migrations
                     { 2, "Car", 1 },
                     { 3, "Bus", 2 },
                     { 4, "Airplane", 3 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Vehicles",
-                columns: new[] { "Id", "ArrivalTime", "Brand", "Color", "LicenceNr", "MemberId", "Model", "NrOfWheels", "VehicleType2Id" },
-                values: new object[,]
-                {
-                    { 3, new DateTime(2020, 10, 28, 13, 26, 36, 987, DateTimeKind.Local).AddTicks(8196), "Yamaha", "Black", "SKTHMH", 3, "Super", 2, 1 },
-                    { 1, new DateTime(2020, 10, 23, 13, 26, 36, 979, DateTimeKind.Local).AddTicks(6786), "Opel", "Green", "CARBBC", 1, "Corsa", 4, 2 },
-                    { 2, new DateTime(2020, 10, 25, 13, 26, 36, 987, DateTimeKind.Local).AddTicks(8037), "Volvo", "Black", "NAVI94", 2, "XC90", 4, 2 },
-                    { 4, new DateTime(2020, 10, 29, 13, 26, 36, 987, DateTimeKind.Local).AddTicks(8211), "Mercedes", "Blue", "BUSBUS", 4, "Ultra", 10, 3 }
                 });
 
             migrationBuilder.CreateIndex(

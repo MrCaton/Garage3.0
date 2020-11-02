@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GarageMVC.Migrations
 {
     [DbContext(typeof(GarageMVCContext))]
-    [Migration("20201030122637_Init")]
-    partial class Init
+    [Migration("20201102073007_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -141,56 +141,6 @@ namespace GarageMVC.Migrations
                     b.HasIndex("VehicleType2Id");
 
                     b.ToTable("Vehicles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ArrivalTime = new DateTime(2020, 10, 23, 13, 26, 36, 979, DateTimeKind.Local).AddTicks(6786),
-                            Brand = "Opel",
-                            Color = "Green",
-                            LicenceNr = "CARBBC",
-                            MemberId = 1,
-                            Model = "Corsa",
-                            NrOfWheels = 4,
-                            VehicleType2Id = 2
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ArrivalTime = new DateTime(2020, 10, 25, 13, 26, 36, 987, DateTimeKind.Local).AddTicks(8037),
-                            Brand = "Volvo",
-                            Color = "Black",
-                            LicenceNr = "NAVI94",
-                            MemberId = 2,
-                            Model = "XC90",
-                            NrOfWheels = 4,
-                            VehicleType2Id = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ArrivalTime = new DateTime(2020, 10, 28, 13, 26, 36, 987, DateTimeKind.Local).AddTicks(8196),
-                            Brand = "Yamaha",
-                            Color = "Black",
-                            LicenceNr = "SKTHMH",
-                            MemberId = 3,
-                            Model = "Super",
-                            NrOfWheels = 2,
-                            VehicleType2Id = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            ArrivalTime = new DateTime(2020, 10, 29, 13, 26, 36, 987, DateTimeKind.Local).AddTicks(8211),
-                            Brand = "Mercedes",
-                            Color = "Blue",
-                            LicenceNr = "BUSBUS",
-                            MemberId = 4,
-                            Model = "Ultra",
-                            NrOfWheels = 10,
-                            VehicleType2Id = 3
-                        });
                 });
 
             modelBuilder.Entity("GarageMVC.Models.Entities.VehicleType2", b =>

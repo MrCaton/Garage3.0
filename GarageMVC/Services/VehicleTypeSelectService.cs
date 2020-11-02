@@ -39,7 +39,16 @@ namespace GarageMVC.Services
                 Value = n.Id.ToString()
             }).ToListAsync();
         }
-
+        public async Task<IEnumerable<SelectListItem>> SelectVehicles()
+        {
+            // make sure this picks id, not just name
+            return await context.Vehicles.Select(n =>
+            new SelectListItem()
+            {
+                Text = n.LicenceNr,
+                Value = n.Id.ToString()
+            }).ToListAsync();
+        }
 
     }
 }

@@ -8,5 +8,7 @@ namespace GarageMVC.Services
     {
         Task<IEnumerable<SelectListItem>> SelectTypes();
         Task<IEnumerable<SelectListItem>> SelectMembers();
+        Task<IEnumerable<SelectListItem>> SelectVehicles();
+
     }
 }
