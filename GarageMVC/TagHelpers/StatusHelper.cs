@@ -29,8 +29,8 @@ namespace GarageMVC.TagHelpers
                 //parkingstatus = "links for unparking";
 
                 output.Content.SetHtmlContent(
-                $@"<a href=""../{Controller}/Edit/{Key}"">Edit</a>
-                   <a href=""../{Controller}/Details/{Key}"">Details</a>
+                $@"<a href=""../{Controller}/Edit/{Key}"">Edit</a> |
+                   <a href=""../{Controller}/Details/{Key}"">Details</a> |
                    <a href=""../{Controller}/Receipt/{Key}"">Unpark</a>"
                    );
             }
@@ -39,9 +39,10 @@ namespace GarageMVC.TagHelpers
                 //parkingstatus = "links for parking and deleting";
 
                 output.Content.SetHtmlContent(
-                $@"<a href=""../{Controller}/Edit/{Key}"">Edit</a>
-                   <a href=""../{Controller}/Details/{Key}"">Details</a>
-                   <a href=""../{Controller}/Delete/{Key}"">Delete</a>"
+                $@"<a href=""../{Controller}/Edit/{Key}"">Edit</a> |
+                   <a href=""../{Controller}/Details/{Key}"">Details</a> |
+                   <a>Park</a> |
+                   <a href=""../{Controller}/Delete/{Key}"">Unregister</a>"
                    );
             }
 
