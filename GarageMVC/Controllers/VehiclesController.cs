@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GarageMVC.Data;
 using GarageMVC.Models.Entities;
@@ -11,9 +10,8 @@ using AutoMapper;
 using GarageMVC.ViewModels;
 using Microsoft.Extensions.Options;
 using GarageMVC.Common;
-using System.Net.WebSockets;
 using System.Text;
-using Microsoft.Extensions.Options;
+
 
 namespace GarageMVC.Controllers
 {
